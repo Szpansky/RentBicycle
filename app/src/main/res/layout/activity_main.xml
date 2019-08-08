@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_main"
+    tools:context=".activities.MainActivity">
+
+    <com.apps.mkacik.rentbicycle.layouts.MenuButton
+        android:id="@+id/rentButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:description="@string/rent"
+        app:image="@drawable/icon_all_bicycle_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/listButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/walletView"
+        app:srcCompat="@drawable/circle" />
+
+    <com.apps.mkacik.rentbicycle.layouts.MenuButton
+        android:id="@+id/listButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:description="@string/list"
+        app:image="@drawable/icon_my_bicycle_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/walletButton"
+        app:layout_constraintStart_toEndOf="@+id/rentButton"
+        app:layout_constraintTop_toBottomOf="@+id/walletView"
+        app:srcCompat="@drawable/circle" />
+
+    <com.apps.mkacik.rentbicycle.layouts.MenuButton
+        android:id="@+id/walletButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:description="@string/wallet"
+        app:image="@drawable/icon_payment_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/listButton"
+        app:layout_constraintTop_toBottomOf="@+id/walletView"
+        app:srcCompat="@drawable/circle" />
+
+    <com.apps.mkacik.rentbicycle.layouts.WalletStatusLayout
+        android:id="@+id/walletView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:cashInteger="19"
+        app:cashIntegerExtend="zł"
+        app:cashRest="89"
+        app:cashRestExtend="gr"
+        app:layout_constraintBottom_toTopOf="@+id/listButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

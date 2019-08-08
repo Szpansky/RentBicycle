@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MenuButton">
+        <attr name="image" format="reference" />
+        <attr name="description" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="WalletStatusLayout">
+        <attr name="cashInteger" format="string" />
+        <attr name="cashIntegerExtend" format="string" />
+        <attr name="cashRest" format="string" />
+        <attr name="cashRestExtend" format="string" />
+    </declare-styleable>
+
+</resources>

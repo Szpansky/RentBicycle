@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rent Bicycle</string>
+    <string name="list">Lista</string>
+    <string name="rent">Wypożycz</string>
+    <string name="wallet">Portfel</string>
+    <string name="add_cash">Doładuj konto</string>
+    <string name="back">Wróć</string>
+    <string name="transaction_history">Historia transakcji</string>
+    <string name="availability">Dostępność</string>
+    <string name="bicycle_number">Numer roweru</string>
+    <string name="brand">Marka</string>
+    <string name="color">Kolor</string>
+    <string name="cost_1_min">Koszt / 1 min</string>
+    <string name="end_the_rent">Zakończ wypożyczenie</string>
+    <string name="price_for_rent">Opłata za wypożyczenie</string>
+    <string name="rent_time_start">Data wypożyczenia</string>
+    <string name="sort_by_brand">Sortuj po marce</string>
+    <string name="sort_by_color">Sortuj po kolorze</string>
+    <string name="sort_by_cost">Sortuj po cenie</string>
+    <string name="sort_by_status">Sortuj po statusie</string>
+</resources>

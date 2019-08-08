@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/sort_by_color_item"
+        android:title="@string/sort_by_color" />
+    <item
+        android:id="@+id/sort_by_brand_item"
+        android:title="@string/sort_by_brand" />
+    <item
+        android:id="@+id/sort_by_status_item"
+        android:title="@string/sort_by_status" />
+    <item
+        android:id="@+id/sort_by_cost_item"
+        android:title="@string/sort_by_cost" />
+
+</menu>
