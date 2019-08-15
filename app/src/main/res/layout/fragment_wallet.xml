@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    tools:context=".activities.WalletActivity">
+    android:background="@drawable/background">
 
     <com.apps.mkacik.rentbicycle.layouts.WalletStatusLayout
         android:id="@+id/walletView"
@@ -53,16 +52,6 @@
             tools:layout_editor_absoluteX="161dp"
             tools:layout_editor_absoluteY="295dp" />
 
-        <Button
-            android:id="@+id/backButton"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/oval_rectangle"
-            android:text="@string/back"
-            tools:layout_editor_absoluteX="161dp"
-            tools:layout_editor_absoluteY="295dp" />
     </LinearLayout>
 
 

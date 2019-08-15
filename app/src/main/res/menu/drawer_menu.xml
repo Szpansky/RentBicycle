@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/listButton"
+        android:checkable="true"
+        android:checked="true"
+        android:icon="@drawable/icon_all_bicycle_black"
+        android:title="@string/bicycle_list" />
+    <item
+        android:id="@+id/rentedButton"
+        android:checkable="true"
+        android:icon="@drawable/icon_my_bicycle_black"
+        android:title="@string/rented_bicycles" />
+    <item
+        android:id="@+id/walletButton"
+        android:checkable="true"
+        android:icon="@drawable/icon_payment_black"
+        android:title="@string/wallet" />
+</menu>

@@ -19,4 +19,6 @@
     <string name="sort_by_color">Sortuj po kolorze</string>
     <string name="sort_by_cost">Sortuj po cenie</string>
     <string name="sort_by_status">Sortuj po statusie</string>
+    <string name="navigation_drawer_open">Open Drawer</string>
+    <string name="navigation_drawer_close">Close Drawer</string>
 </resources>

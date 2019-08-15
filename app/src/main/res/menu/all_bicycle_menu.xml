@@ -3,15 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/search"
+        android:icon="@drawable/icon_search_black"
+        android:title="@string/search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always" />
+    <item
+        android:checkable="true"
         android:id="@+id/sort_by_color_item"
         android:title="@string/sort_by_color" />
     <item
+        android:checkable="true"
         android:id="@+id/sort_by_brand_item"
         android:title="@string/sort_by_brand" />
     <item
+        android:checkable="true"
         android:id="@+id/sort_by_status_item"
         android:title="@string/sort_by_status" />
     <item
+        android:checkable="true"
         android:id="@+id/sort_by_cost_item"
         android:title="@string/sort_by_cost" />
 
