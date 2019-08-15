@@ -3,9 +3,16 @@ package com.apps.mkacik.rentbicycle.fragments
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.apps.mkacik.rentbicycle.R
+import com.apps.mkacik.rentbicycle.ViewModels.BicyclesViewModel
+import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
+import com.apps.mkacik.rentbicycle.utilities.InjectorUtils
+import kotlinx.android.synthetic.main.fragment_all_bicycle.*
 
 class BicycleListFragment : Fragment() {
+
 
     companion object {
         val TAG = this::class.java.name
@@ -19,6 +26,27 @@ class BicycleListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val factory = InjectorUtils.provideBicyclesViewModelFactory()
+        val viewModel = ViewModelProviders.of(this, factory).get(BicyclesViewModel::class.java)
+
+        viewModel.getBicycles().observe(this, Observer { bicycles ->
+            val stringBuilder = StringBuilder()
+
+            bicycles.forEach { bicycle ->
+                stringBuilder.append("${bicycle.id}+${bicycle.brand}\n\n")
+            }
+
+            textView.text = stringBuilder.toString()
+        })
+
+
+
+        button.setOnClickListener {
+            val bicycle = BicycleEntity(true, 12.5F, "red", "rower")
+            Thread{viewModel.addBicycle(bicycle)}.start()
+
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

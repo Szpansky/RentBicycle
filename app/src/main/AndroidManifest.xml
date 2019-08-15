@@ -4,6 +4,7 @@
     package="com.apps.mkacik.rentbicycle">
 
     <application
+        android:name=".utilities.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,14 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <activity
-            android:name=".activities.WalletActivity"
-            android:theme="@style/NoActionBarTheme" />
-
-        <activity android:name=".activities.MyBicycleActivity" />
-
-        <activity android:parentActivityName=".activities.MainActivity" android:name=".activities.RentBicycleActivity" />
 
         <activity
             android:name=".activities.MainActivity"

@@ -1,4 +1,4 @@
-package com.apps.mkacik.rentbicycle.database.entity
+package com.apps.mkacik.rentbicycle.data.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -7,11 +7,13 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "TRANSACTION_LOG")
 class TransactionLogEntity(
-    @PrimaryKey
-    var id: Int,
+
     @ColumnInfo(name = "DIFFERENCE")
-    var differenc: String,
+    var differenc: Float,
     @ColumnInfo(name = "WALLET_CASH")
     var walletCash: Float
 
-)
+) {
+    @PrimaryKey
+    var id: Int = 0
+}

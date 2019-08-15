@@ -1,4 +1,4 @@
-package com.apps.mkacik.rentbicycle.appData
+package com.apps.mkacik.rentbicycle.data
 
 import android.content.Context
 import android.content.SharedPreferences
