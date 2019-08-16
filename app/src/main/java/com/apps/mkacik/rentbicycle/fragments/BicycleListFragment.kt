@@ -2,22 +2,20 @@ package com.apps.mkacik.rentbicycle.fragments
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.apps.mkacik.rentbicycle.R
 import com.apps.mkacik.rentbicycle.adapters.BicyclesAdapter
 import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 import com.apps.mkacik.rentbicycle.utilities.InjectorUtils
 import com.apps.mkacik.rentbicycle.viewModels.BicyclesViewModel
-import kotlinx.android.synthetic.main.fragment_all_bicycle.*
+import kotlinx.android.synthetic.main.list_layout.*
 
-class BicycleListFragment : Fragment(), BicyclesAdapter.BicycleAdapterInterface {
+class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterInterface {
 
     private lateinit var viewModel: BicyclesViewModel
 
@@ -34,29 +32,20 @@ class BicycleListFragment : Fragment(), BicyclesAdapter.BicycleAdapterInterface 
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.list_layout, container, false)
         setHasOptionsMenu(true)
-        activity!!.title = NAME
-
         val factory = InjectorUtils.provideBicyclesViewModelFactory()
         viewModel = ViewModelProviders.of(this, factory).get(BicyclesViewModel::class.java)
-
-        recycle_view.layoutManager = LinearLayoutManager(context)
-        loadBicycles()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_all_bicycle, container, false)
-        setHasOptionsMenu(true)
-        activity!!.title = NAME
         return view
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater?.inflate(R.menu.all_bicycle_menu, menu)
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
@@ -67,6 +56,7 @@ class BicycleListFragment : Fragment(), BicyclesAdapter.BicycleAdapterInterface 
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 
     fun addBicycle() {
         val bicycle = BicycleEntity(true, 12.5F, "red", "rower")
@@ -82,7 +72,14 @@ class BicycleListFragment : Fragment(), BicyclesAdapter.BicycleAdapterInterface 
         })
     }
 
-    fun loadBicycles() {
+
+    override fun hasOptionMenuEnabled(): Boolean = true
+
+
+    override fun setTitle(): CharSequence? = NAME
+
+
+    override fun loadData() {
         viewModel.getBicycles(object : BicycleLoadingProvider.GetCallBack {
 
             override fun onSuccess(bicycleList: LiveData<List<BicycleEntity>>) {
@@ -98,12 +95,16 @@ class BicycleListFragment : Fragment(), BicyclesAdapter.BicycleAdapterInterface 
                 infoToast("ERROR")
             }
         })
-
     }
+
+
+    override fun getRecycleView(): RecyclerView = recycle_view
+
 
     override fun onItemClick(bicycleEntity: BicycleEntity) {
         infoToast("ITEM CLICK")
     }
+
 
     override fun onRentClick(bicycleEntity: BicycleEntity) {
         infoToast("RENT CLICK")
@@ -116,11 +117,6 @@ class BicycleListFragment : Fragment(), BicyclesAdapter.BicycleAdapterInterface 
             override fun onFail(throwable: Throwable) {
                 infoToast("ERROR ${throwable.message}")
             }
-
         })
-    }
-
-    fun infoToast(info: String) {
-        Toast.makeText(context, info, Toast.LENGTH_SHORT).show()
     }
 }
