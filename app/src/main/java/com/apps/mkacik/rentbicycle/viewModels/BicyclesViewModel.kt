@@ -14,4 +14,8 @@ class BicyclesViewModel(private val bicyclesRepository: BicycleLoadingProvider) 
     fun getBicycles(getCallBack: BicycleLoadingProvider.GetCallBack) {
         bicyclesRepository.getBicycles(getCallBack)
     }
+
+    fun rentBicycle(bicycle: BicycleEntity, rentCallBack: BicycleLoadingProvider.RentCallBack) {
+        bicyclesRepository.rentBicycle(bicycle, rentCallBack)
+    }
 }

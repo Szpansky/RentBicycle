@@ -22,7 +22,7 @@ interface DatabaseDAO {
     fun getBicycles(): LiveData<List<BicycleEntity>>
 
     @Query("select * from RENTS")
-    fun getRents(): List<RentEntity>
+    fun getRents(): LiveData<List<RentEntity>>
 
     @Query("select * from TRANSACTION_LOG")
     fun getTransactionLog(): List<TransactionLogEntity>

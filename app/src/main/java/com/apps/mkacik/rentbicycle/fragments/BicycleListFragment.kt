@@ -36,14 +36,14 @@ class BicycleListFragment : Fragment(), BicyclesAdapter.BicycleAdapterInterface 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+        activity!!.title = NAME
 
         val factory = InjectorUtils.provideBicyclesViewModelFactory()
-
         viewModel = ViewModelProviders.of(this, factory).get(BicyclesViewModel::class.java)
 
-        loadBicycles()
-
         recycle_view.layoutManager = LinearLayoutManager(context)
+        loadBicycles()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -107,6 +107,17 @@ class BicycleListFragment : Fragment(), BicyclesAdapter.BicycleAdapterInterface 
 
     override fun onRentClick(bicycleEntity: BicycleEntity) {
         infoToast("RENT CLICK")
+
+        viewModel.rentBicycle(bicycleEntity, object : BicycleLoadingProvider.RentCallBack {
+            override fun onSuccess() {
+                infoToast("ADDED")
+            }
+
+            override fun onFail(throwable: Throwable) {
+                infoToast("ERROR ${throwable.message}")
+            }
+
+        })
     }
 
     fun infoToast(info: String) {

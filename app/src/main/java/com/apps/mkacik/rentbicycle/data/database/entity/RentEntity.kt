@@ -20,7 +20,7 @@ import androidx.room.PrimaryKey
 data class RentEntity(
 
     @ColumnInfo(name = "RENT_BIKE_ID", index = true)
-    var id_bike: Int,
+    var idBike: Int,
     @ColumnInfo(name = "RENT_BIKE_DATE_START", defaultValue = "00-00-00 00:00:00")
     var date: String
 ) {
