@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "BICYCLES")
-class BicycleEntity(
+data class BicycleEntity(
 
     @ColumnInfo(name = "STATUS")
     var status: Boolean,

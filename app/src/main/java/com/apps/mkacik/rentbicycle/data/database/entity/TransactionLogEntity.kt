@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "TRANSACTION_LOG")
-class TransactionLogEntity(
+data class TransactionLogEntity(
 
     @ColumnInfo(name = "DIFFERENCE")
     var differenc: Float,

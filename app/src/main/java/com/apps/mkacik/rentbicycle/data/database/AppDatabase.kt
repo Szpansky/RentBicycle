@@ -10,27 +10,31 @@ import com.apps.mkacik.rentbicycle.data.database.entity.TransactionLogEntity
 
 @Database(
     entities = [(BicycleEntity::class), (RentEntity::class), (TransactionLogEntity::class)],
-    version = 1)
+    version = 1
+)
 
-abstract class AppDatabase : RoomDatabase(){
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun rentBicycleDAO(): DatabaseDAO
 
-    companion object{
-        @Volatile private var instance: AppDatabase? = null
+    companion object {
+        @Volatile
+        private var instance: AppDatabase? = null
         private val LOCK = Any()
         const val NAME = "RentBicycleDatabase.db"
 
-        operator fun invoke(context: Context)=
+        operator fun invoke(context: Context) =
             instance
-                ?: synchronized(LOCK){
-            instance
-                ?: buildDatabase(context).also{ instance = it}
-        }
+                ?: synchronized(LOCK) {
+                    instance
+                        ?: buildDatabase(context).also { instance = it }
+                }
 
-        private fun buildDatabase(context: Context)= Room.databaseBuilder(context,
+        private fun buildDatabase(context: Context) = Room.databaseBuilder(
+            context,
             AppDatabase::class.java,
             NAME
-        ).build()
+        ).allowMainThreadQueries()
+            .build()
     }
 }

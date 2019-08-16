@@ -17,7 +17,7 @@ import androidx.room.PrimaryKey
     )]
 )
 
-class RentEntity(
+data class RentEntity(
 
     @ColumnInfo(name = "RENT_BIKE_ID", index = true)
     var id_bike: Int,
