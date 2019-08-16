@@ -23,4 +23,7 @@
     <string name="search">Search</string>
     <string name="bicycle_list">Bicycle List</string>
     <string name="rented_bicycles">Rented Bicycles</string>
+    <string name="integer_extend">dol</string>
+    <string name="rest_extend">cent</string>
+    <string name="charge_with">Charge With</string>
 </resources>

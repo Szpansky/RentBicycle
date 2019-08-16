@@ -21,4 +21,9 @@
     <string name="sort_by_status">Sortuj po statusie</string>
     <string name="navigation_drawer_open">Open Drawer</string>
     <string name="navigation_drawer_close">Close Drawer</string>
+    <string name="bicycle_list">Lista Rowerów</string>
+    <string name="integer_extend">zł</string>
+    <string name="rented_bicycles">Rowery Wypożyczone</string>
+    <string name="rest_extend">gr</string>
+    <string name="search">Wyszukaj</string>
 </resources>

@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.apps.mkacik.rentbicycle.R
-import kotlinx.android.synthetic.main.menu_button.view.*
+import kotlinx.android.synthetic.main.circle_text_image_layout.view.*
 
 class MenuButton(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
@@ -14,7 +14,7 @@ class MenuButton(context: Context, attrs: AttributeSet?) : LinearLayout(context,
     private val typedArray : TypedArray = context.obtainStyledAttributes(attrs,R.styleable.MenuButton,0,0)
 
     init {
-        inflater.inflate(R.layout.menu_button,this)
+        inflater.inflate(R.layout.circle_text_image_layout,this)
         image.setImageDrawable(typedArray.getDrawable(R.styleable.MenuButton_image))
         description.text = typedArray.getText(R.styleable.MenuButton_description)
     }

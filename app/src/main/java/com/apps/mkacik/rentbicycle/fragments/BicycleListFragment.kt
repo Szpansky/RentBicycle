@@ -15,7 +15,7 @@ import com.apps.mkacik.rentbicycle.utilities.InjectorUtils
 import com.apps.mkacik.rentbicycle.viewModels.BicyclesViewModel
 import kotlinx.android.synthetic.main.list_layout.*
 
-class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterInterface {
+class BicycleListFragment private constructor() : BaseListFragment(), BicyclesAdapter.BicycleAdapterInterface {
 
     private lateinit var viewModel: BicyclesViewModel
 
