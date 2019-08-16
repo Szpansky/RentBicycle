@@ -8,6 +8,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.apps.mkacik.rentbicycle.R
+import com.apps.mkacik.rentbicycle.data.AppSharedPref
+import com.apps.mkacik.rentbicycle.dialogs.FirstRunDialog
 import com.apps.mkacik.rentbicycle.fragments.BicycleListFragment
 import com.apps.mkacik.rentbicycle.fragments.RentedListFragment
 import com.apps.mkacik.rentbicycle.fragments.WalletFragment
@@ -55,6 +57,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if(AppSharedPref().isFirstRun(this)){
+            FirstRunDialog.newInstance().show(supportFragmentManager, FirstRunDialog.TAG.toString())
+        }
+
         setContentView(R.layout.activity_main)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)

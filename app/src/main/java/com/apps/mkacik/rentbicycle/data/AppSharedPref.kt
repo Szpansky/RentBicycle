@@ -2,6 +2,7 @@ package com.apps.mkacik.rentbicycle.data
 
 import android.content.Context
 import android.content.SharedPreferences
+
 //TODO export to repository
 class AppSharedPref {
 
@@ -26,5 +27,12 @@ class AppSharedPref {
     fun isFirstRun(context: Context): Boolean {
         val sharedPreferences: SharedPreferences = context.getSharedPreferences(USER_DATA, Context.MODE_PRIVATE)
         return sharedPreferences.getBoolean(FIRST_RUN, true)
+    }
+
+    fun saveFirstRun(state: Boolean, context: Context) {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences(USER_DATA, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(FIRST_RUN, state)
+        editor.apply()
     }
 }

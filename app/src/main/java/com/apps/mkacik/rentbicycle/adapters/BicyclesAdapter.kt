@@ -50,6 +50,7 @@ class BicyclesAdapter(private val bicycleList: List<BicycleEntity>) :
             itemView.brand.text = bicycleEntity.brand
             itemView.price.text = bicycleEntity.price.toString()
             itemView.status.text = bicycleEntity.status.toString()
+            itemView.item_id.text = bicycleEntity.id.toString()
             itemView.item_layout.setOnClickListener { bicycleAdapterInterface?.onItemClick(bicycleEntity) }
             itemView.rent_bicycle.setOnClickListener { bicycleAdapterInterface?.onRentClick(bicycleEntity) }
         }

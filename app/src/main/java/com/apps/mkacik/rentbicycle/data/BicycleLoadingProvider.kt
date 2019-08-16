@@ -6,6 +6,13 @@ import com.apps.mkacik.rentbicycle.data.database.entity.RentEntity
 
 interface BicycleLoadingProvider {
 
+    fun addBicycles(bicycles: List<BicycleEntity>, addListCallBack: AddListCallBack)
+
+    interface AddListCallBack {
+        fun onSuccess()
+        fun onFail(throwable: Throwable)
+    }
+
     fun addBicycle(bicycle: BicycleEntity, addCallBack: AddCallBack)
 
     interface AddCallBack {

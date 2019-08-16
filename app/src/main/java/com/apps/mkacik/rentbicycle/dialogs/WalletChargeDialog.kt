@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.apps.mkacik.rentbicycle.R
@@ -48,10 +49,14 @@ class WalletChargeDialog private constructor() : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val walletCash = AppSharedPref().getWalletCash(requireContext().applicationContext)
 
-        add_5_button.setOnClickListener { addCash(walletCash + 5F) }
-        add_10_button.setOnClickListener { addCash(walletCash + 10F) }
-        add_25_button.setOnClickListener { addCash(walletCash + 25F) }
-        add_50_button.setOnClickListener { addCash(walletCash + 50F) }
+        if(walletCash < 99999F) {
+            add_5_button.setOnClickListener { addCash(walletCash + 5F) }
+            add_10_button.setOnClickListener { addCash(walletCash + 10F) }
+            add_25_button.setOnClickListener { addCash(walletCash + 25F) }
+            add_50_button.setOnClickListener { addCash(walletCash + 50F) }
+        }else{
+            Toast.makeText(requireContext().applicationContext,"Max Cash In Wallet", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun addCash(walletCash: Float) {

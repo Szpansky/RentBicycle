@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/start_cash"
+                android:maxLength="5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Start Cash Count"
+                android:digits="0123456789."
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/start_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/oval_rectangle"
+            android:clickable="false"
+            android:focusable="false"
+            android:text="Start"
+            android:textAllCaps="true" />
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

@@ -12,6 +12,18 @@ import com.apps.mkacik.rentbicycle.data.database.entity.TransactionLogEntity
 @Dao
 interface DatabaseDAO {
 
+    @Query("DELETE FROM BICYCLES")
+    fun deleteTableBicycles()
+
+    @Query("DELETE FROM RENTS")
+    fun deleteTableRents()
+
+    @Query("DELETE FROM TRANSACTION_LOG")
+    fun deleteTableTransactionLogs()
+
+    @Insert
+    fun saveBicycles(bicycles: List<BicycleEntity>)
+
     @Insert
     fun saveBicycle(bicycle: BicycleEntity)
 

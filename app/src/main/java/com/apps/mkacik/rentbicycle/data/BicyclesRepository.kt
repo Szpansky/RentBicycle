@@ -6,6 +6,17 @@ import com.apps.mkacik.rentbicycle.data.database.entity.RentEntity
 
 class BicyclesRepository private constructor(private val databaseDAO: DatabaseDAO) : BicycleLoadingProvider {
 
+    fun deleteData(){
+        databaseDAO.deleteTableBicycles()
+        databaseDAO.deleteTableRents()
+        databaseDAO.deleteTableTransactionLogs()
+    }
+
+    override fun addBicycles(bicycles: List<BicycleEntity>, addListCallBack: BicycleLoadingProvider.AddListCallBack) {
+        databaseDAO.saveBicycles(bicycles)
+        addListCallBack.onSuccess()
+    }
+
     override fun getRentBicycles(rentBicyclesCallBack: BicycleLoadingProvider.GetRentBicyclesCallBack) {
         rentBicyclesCallBack.onSuccess(databaseDAO.getRents())
     }
