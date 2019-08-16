@@ -8,7 +8,21 @@ import com.apps.mkacik.rentbicycle.R
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 import kotlinx.android.synthetic.main.item_layout_bicycle.view.*
 
-class BicyclesAdapter(private val bicycleList: List<BicycleEntity>) : RecyclerView.Adapter<BicyclesAdapter.ViewHolder>() {
+class BicyclesAdapter(private val bicycleList: List<BicycleEntity>) :
+    RecyclerView.Adapter<BicyclesAdapter.ViewHolder>() {
+
+    companion object {
+        var bicycleAdapterInterface: BicycleAdapterInterface? = null
+    }
+
+    interface BicycleAdapterInterface {
+        fun onItemClick(bicycleEntity: BicycleEntity)
+        fun onRentClick(bicycleEntity: BicycleEntity)
+    }
+
+    fun bindInterface(bicycleAdapterInterface: BicycleAdapterInterface) {
+        BicyclesAdapter.bicycleAdapterInterface = bicycleAdapterInterface
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -36,8 +50,8 @@ class BicyclesAdapter(private val bicycleList: List<BicycleEntity>) : RecyclerVi
             itemView.brand.text = bicycleEntity.brand
             itemView.price.text = bicycleEntity.price.toString()
             itemView.status.text = bicycleEntity.status.toString()
+            itemView.item_layout.setOnClickListener { bicycleAdapterInterface?.onItemClick(bicycleEntity) }
+            itemView.rent_bicycle.setOnClickListener { bicycleAdapterInterface?.onRentClick(bicycleEntity) }
         }
-
-
     }
 }

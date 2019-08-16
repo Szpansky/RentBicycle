@@ -17,10 +17,12 @@ import com.apps.mkacik.rentbicycle.utilities.InjectorUtils
 import com.apps.mkacik.rentbicycle.viewModels.BicyclesViewModel
 import kotlinx.android.synthetic.main.fragment_all_bicycle.*
 
-class BicycleListFragment : Fragment() {
+class BicycleListFragment : Fragment(), BicyclesAdapter.BicycleAdapterInterface {
 
     private lateinit var viewModel: BicyclesViewModel
+
     val lifecycleOwner: LifecycleOwner = this
+    val bicycleAdapterInterface: BicyclesAdapter.BicycleAdapterInterface = this
 
     companion object {
         val TAG = this::class.java.name
@@ -42,7 +44,6 @@ class BicycleListFragment : Fragment() {
         loadBicycles()
 
         recycle_view.layoutManager = LinearLayoutManager(context)
-        //recycle_view.adapter =
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -88,6 +89,7 @@ class BicycleListFragment : Fragment() {
                 bicycleList.observe(lifecycleOwner, Observer { bicycles ->
 
                     recycle_view.adapter = BicyclesAdapter(bicycles)
+                    (recycle_view.adapter as BicyclesAdapter).bindInterface(bicycleAdapterInterface)
 
                 })
             }
@@ -97,6 +99,14 @@ class BicycleListFragment : Fragment() {
             }
         })
 
+    }
+
+    override fun onItemClick(bicycleEntity: BicycleEntity) {
+        infoToast("ITEM CLICK")
+    }
+
+    override fun onRentClick(bicycleEntity: BicycleEntity) {
+        infoToast("RENT CLICK")
     }
 
     fun infoToast(info: String) {
