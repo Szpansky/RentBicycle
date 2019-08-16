@@ -8,7 +8,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.apps.mkacik.rentbicycle.R
+import com.apps.mkacik.rentbicycle.adapters.BicyclesAdapter
 import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 import com.apps.mkacik.rentbicycle.utilities.InjectorUtils
@@ -17,6 +19,8 @@ import kotlinx.android.synthetic.main.fragment_all_bicycle.*
 
 class BicycleListFragment : Fragment() {
 
+    private lateinit var viewModel: BicyclesViewModel
+    val lifecycleOwner: LifecycleOwner = this
 
     companion object {
         val TAG = this::class.java.name
@@ -32,46 +36,13 @@ class BicycleListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val factory = InjectorUtils.provideBicyclesViewModelFactory()
-        val viewModel = ViewModelProviders.of(this, factory).get(BicyclesViewModel::class.java)
-        val lifecycleOwner: LifecycleOwner = this
 
+        viewModel = ViewModelProviders.of(this, factory).get(BicyclesViewModel::class.java)
 
-        viewModel.getBicycles(object : BicycleLoadingProvider.GetCallBack {
-            override fun onSuccess(bicycleList: LiveData<List<BicycleEntity>>) {
-                bicycleList.observe(lifecycleOwner, Observer { bicycles ->
-                    val stringBuilder = StringBuilder()
+        loadBicycles()
 
-                    bicycles.forEach { bicycle ->
-                        stringBuilder.append("${bicycle.id}+${bicycle.brand}\n\n")
-                    }
-
-                    textView.text = stringBuilder.toString()
-                })
-            }
-
-            override fun onFail(throwable: Throwable) {
-                infoToast("ERROR")
-            }
-        })
-
-
-        val bicycle = BicycleEntity(true, 12.5F, "red", "rower")
-
-
-
-        button.setOnClickListener {
-            viewModel.addBicycle(bicycle, object : BicycleLoadingProvider.AddCallBack {
-                override fun onSuccess() {
-                    infoToast("SUCCESS")
-                }
-
-                override fun onFail(throwable: Throwable) {
-                    infoToast("ERROR")
-                }
-            })
-        }
-
-
+        recycle_view.layoutManager = LinearLayoutManager(context)
+        //recycle_view.adapter =
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -94,6 +65,38 @@ class BicycleListFragment : Fragment() {
             R.id.sort_by_brand_item -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun addBicycle() {
+        val bicycle = BicycleEntity(true, 12.5F, "red", "rower")
+
+        viewModel.addBicycle(bicycle, object : BicycleLoadingProvider.AddCallBack {
+            override fun onSuccess() {
+                infoToast("SUCCESS")
+            }
+
+            override fun onFail(throwable: Throwable) {
+                infoToast("ERROR")
+            }
+        })
+    }
+
+    fun loadBicycles() {
+        viewModel.getBicycles(object : BicycleLoadingProvider.GetCallBack {
+
+            override fun onSuccess(bicycleList: LiveData<List<BicycleEntity>>) {
+                bicycleList.observe(lifecycleOwner, Observer { bicycles ->
+
+                    recycle_view.adapter = BicyclesAdapter(bicycles)
+
+                })
+            }
+
+            override fun onFail(throwable: Throwable) {
+                infoToast("ERROR")
+            }
+        })
+
     }
 
     fun infoToast(info: String) {

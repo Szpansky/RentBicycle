@@ -15,6 +15,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:itemCount="1"
-        tools:listitem="@layout/my_bicycle_item_layout" />
+        tools:listitem="@layout/item_layout_rented_bicycle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

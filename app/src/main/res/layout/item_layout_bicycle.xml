@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="5dp"
     app:cardBackgroundColor="@color/colorPrimaryDark"
     app:cardCornerRadius="15dp">
 
@@ -44,7 +47,7 @@
                     android:text="@string/availability" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -66,7 +69,7 @@
                     android:text="@string/cost_1_min" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -89,7 +92,7 @@
                     android:text="@string/brand" />
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/brand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -111,7 +114,7 @@
                     android:text="@string/color" />
 
                 <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -123,13 +126,12 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_margin="5dp"
-            android:layout_weight="1"
             android:background="@drawable/circle"
-            android:padding="15dp"
+            android:padding="9dp"
             app:srcCompat="@drawable/icon_add_to_cart_whitte" />
 
     </LinearLayout>
