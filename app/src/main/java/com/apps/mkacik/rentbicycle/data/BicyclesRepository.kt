@@ -6,7 +6,12 @@ import com.apps.mkacik.rentbicycle.data.database.entity.RentEntity
 
 class BicyclesRepository private constructor(private val databaseDAO: DatabaseDAO) : BicycleLoadingProvider {
 
-    fun deleteData(){
+    override fun editBicycle(bicycle: BicycleEntity, editCallBack: BicycleLoadingProvider.EditCallBack) {
+        databaseDAO.updateBicycle(bicycle)
+        editCallBack.onSuccess()
+    }
+
+    fun deleteData() {
         databaseDAO.deleteTableBicycles()
         databaseDAO.deleteTableRents()
         databaseDAO.deleteTableTransactionLogs()
@@ -23,10 +28,12 @@ class BicyclesRepository private constructor(private val databaseDAO: DatabaseDA
 
     override fun rentBicycle(bicycle: BicycleEntity, rentCallBack: BicycleLoadingProvider.RentCallBack) {
         if (bicycle.status) {
-            rentCallBack.onFail(Throwable("Bike already occupied"))
-        } else {
             databaseDAO.saveRent(RentEntity(bicycle.id, System.currentTimeMillis().toString()))
+            bicycle.status = !bicycle.status
+            databaseDAO.updateBicycle(bicycle)
             rentCallBack.onSuccess()
+        } else {
+            rentCallBack.onFail(Throwable("Bike already occupied"))
         }
     }
 

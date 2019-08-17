@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 import com.apps.mkacik.rentbicycle.data.database.entity.RentEntity
 import com.apps.mkacik.rentbicycle.data.database.entity.TransactionLogEntity
@@ -11,6 +12,9 @@ import com.apps.mkacik.rentbicycle.data.database.entity.TransactionLogEntity
 
 @Dao
 interface DatabaseDAO {
+
+    @Update
+    fun updateBicycle(bicycle: BicycleEntity)
 
     @Query("DELETE FROM BICYCLES")
     fun deleteTableBicycles()

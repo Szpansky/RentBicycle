@@ -6,11 +6,6 @@ import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 
 class BicyclesViewModel(private val repository: BicycleLoadingProvider) : ViewModel() {
 
-
-    fun addBicycle(bicycle: BicycleEntity, addCallBack: BicycleLoadingProvider.AddCallBack) {
-        repository.addBicycle(bicycle, addCallBack)
-    }
-
     fun getBicycles(getCallBack: BicycleLoadingProvider.GetCallBack) {
         repository.getBicycles(getCallBack)
     }

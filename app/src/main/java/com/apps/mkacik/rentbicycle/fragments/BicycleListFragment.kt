@@ -57,22 +57,6 @@ class BicycleListFragment private constructor() : BaseListFragment(), BicyclesAd
         }
     }
 
-
-    fun addBicycle() {
-        val bicycle = BicycleEntity(true, 12.5F, "red", "rower")
-
-        viewModel.addBicycle(bicycle, object : BicycleLoadingProvider.AddCallBack {
-            override fun onSuccess() {
-                infoToast("SUCCESS")
-            }
-
-            override fun onFail(throwable: Throwable) {
-                infoToast("ERROR")
-            }
-        })
-    }
-
-
     override fun hasOptionMenuEnabled(): Boolean = true
 
 
