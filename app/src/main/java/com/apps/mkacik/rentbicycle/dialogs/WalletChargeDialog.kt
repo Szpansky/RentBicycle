@@ -13,7 +13,7 @@ import com.apps.mkacik.rentbicycle.data.AppSharedPref
 import kotlinx.android.synthetic.main.dialog_wallet_charge.*
 import java.io.Serializable
 
-class WalletChargeDialog private constructor() : DialogFragment() {
+class WalletChargeDialog : DialogFragment() {
 
     interface OnDismissListener : Serializable {
         fun onDismissWalletCharge()

@@ -17,7 +17,7 @@ import com.apps.mkacik.rentbicycle.utilities.InjectorUtils
 import com.apps.mkacik.rentbicycle.viewModels.RentedViewModel
 import kotlinx.android.synthetic.main.list_layout.*
 
-class RentedListFragment private constructor() : BaseListFragment(), RentedAdapter.RentedAdapterInterface {
+class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterface {
 
     private lateinit var viewModel: RentedViewModel
 

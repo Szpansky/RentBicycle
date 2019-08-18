@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.dialog_first_run.*
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class FirstRunDialog private constructor() : DialogFragment() {
+class FirstRunDialog : DialogFragment() {
 
     private var lock = true
 

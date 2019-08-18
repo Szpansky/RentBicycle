@@ -11,7 +11,7 @@ import com.apps.mkacik.rentbicycle.dialogs.WalletChargeDialog
 import kotlinx.android.synthetic.main.fragment_wallet.*
 import kotlinx.android.synthetic.main.wallet_status_layout.view.*
 
-class WalletFragment private constructor() : Fragment(), WalletChargeDialog.OnDismissListener {
+class WalletFragment : Fragment(), WalletChargeDialog.OnDismissListener {
 
     companion object {
         val TAG = this::class.java.name
