@@ -17,14 +17,14 @@ data class BicycleEntity(
     @ColumnInfo(name = "COLOR")
     var color: String,
     @ColumnInfo(name = "BRAND")
-    var brand: String
+    var brand: String,
+    @ColumnInfo(name = "BICYCLE_ID")
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+
 ) : Serializable {
     companion object {
         const val BICYCLE_AVAILABILITY_FALSE: Int = R.string.occupied
         const val BICYCLE_AVAILABILITY_TRUE: Int = R.string.available
     }
-
-    @ColumnInfo(name = "BICYCLE_ID")
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
 }

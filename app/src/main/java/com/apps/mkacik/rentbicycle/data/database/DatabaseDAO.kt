@@ -1,10 +1,7 @@
 package com.apps.mkacik.rentbicycle.data.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 import com.apps.mkacik.rentbicycle.data.database.entity.Rent
 import com.apps.mkacik.rentbicycle.data.database.entity.RentEntity
@@ -43,5 +40,8 @@ interface DatabaseDAO {
 
     @Query("select * from TRANSACTION_LOG")
     fun getTransactionLog(): List<TransactionLogEntity>
+
+    @Delete
+    fun deleteRent(rentEntity: RentEntity)
 
 }

@@ -12,7 +12,6 @@ import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
 import com.apps.mkacik.rentbicycle.data.BicyclesRepository
 import com.apps.mkacik.rentbicycle.data.database.AppDatabase
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
-import com.apps.mkacik.rentbicycle.utilities.App
 import kotlinx.android.synthetic.main.dialog_first_run.*
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -69,37 +68,38 @@ class FirstRunDialog : DialogFragment() {
         return view
     }
 
-    //TODO change to false
+
     override fun onDismiss(dialog: DialogInterface?) {
         super.onDismiss(dialog)
         if (!lock) {
-            AppSharedPref().saveFirstRun(true, requireContext().applicationContext)
+            AppSharedPref().saveFirstRun(false, requireContext().applicationContext)
             createStartItems()
         }
     }
 
     private fun createStartItems() {
-        val bicycleRepository = BicyclesRepository.getInstance(AppDatabase.invoke(requireContext().applicationContext).rentBicycleDAO())
+        val bicycleRepository =
+            BicyclesRepository.getInstance(AppDatabase.invoke(requireContext().applicationContext).rentBicycleDAO())
         bicycleRepository.deleteData()
-        val bicycles : List<BicycleEntity> = listOf(
-            BicycleEntity(false,2.2F,"Red","Cross"),
-            BicycleEntity(true,1.2F,"Blue","Cross"),
-            BicycleEntity(false,1.6F,"Red","Cross"),
-            BicycleEntity(false,3.2F,"Green","Cross"),
-            BicycleEntity(true,1.7F,"Red","Cross"),
-            BicycleEntity(false,2.2F,"Unnamed","Dirty"),
-            BicycleEntity(false,1.2F,"Red","Kajak"),
-            BicycleEntity(false,0.2F,"Black","Goral"),
-            BicycleEntity(false,1.4F,"Red","Dirty"),
-            BicycleEntity(true,1.9F,"Pink","Rover")
+        val bicycles: List<BicycleEntity> = listOf(
+            BicycleEntity(false, 2.2F, "Red", "Cross"),
+            BicycleEntity(true, 1.2F, "Blue", "Cross"),
+            BicycleEntity(false, 1.6F, "Red", "Cross"),
+            BicycleEntity(false, 3.2F, "Green", "Cross"),
+            BicycleEntity(true, 1.7F, "Red", "Cross"),
+            BicycleEntity(false, 2.2F, "Unnamed", "Dirty"),
+            BicycleEntity(false, 1.2F, "Red", "Kajak"),
+            BicycleEntity(false, 0.2F, "Black", "Goral"),
+            BicycleEntity(false, 1.4F, "Red", "Dirty"),
+            BicycleEntity(true, 1.9F, "Pink", "Rover")
         )
 
-        bicycleRepository.addBicycles(bicycles,object : BicycleLoadingProvider.AddListCallBack{
+        bicycleRepository.addBicycles(bicycles, object : BicycleLoadingProvider.AddListCallBack {
             override fun onSuccess() {
             }
 
             override fun onFail(throwable: Throwable) {
             }
-        } )
+        })
     }
 }

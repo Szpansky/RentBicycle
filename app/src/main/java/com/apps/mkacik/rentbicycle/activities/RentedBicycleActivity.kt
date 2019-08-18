@@ -4,20 +4,28 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import com.apps.mkacik.rentbicycle.R
+import com.apps.mkacik.rentbicycle.data.AppSharedPref
+import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 import com.apps.mkacik.rentbicycle.data.database.entity.Rent
+import com.apps.mkacik.rentbicycle.utilities.InjectorUtils
 import com.apps.mkacik.rentbicycle.utilities.SimpleFunction
+import com.apps.mkacik.rentbicycle.viewModels.RentedInfoViewModel
 import kotlinx.android.synthetic.main.fragment_rent_info.*
+import java.util.*
+import kotlin.concurrent.fixedRateTimer
 import kotlin.properties.Delegates
 
 
 class RentedBicycleActivity : AppCompatActivity() {
 
+    private lateinit var viewModel: RentedInfoViewModel
     lateinit var rent: Rent
+    lateinit var timer: Timer
 
     var price: Float by Delegates.observable(0F) { _, _, newValue ->
         rent_price.text = String.format("%.2f ${getString(R.string.integer_extend)}", newValue)
@@ -50,6 +58,9 @@ class RentedBicycleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_rent_info)
 
+        val factory = InjectorUtils.provideRentedInfoViewModelFactory()
+        viewModel = ViewModelProviders.of(this, factory).get(RentedInfoViewModel::class.java)
+
         if (savedInstanceState == null) {
             rent = intent.getSerializableExtra(RENT) as Rent
 
@@ -58,20 +69,36 @@ class RentedBicycleActivity : AppCompatActivity() {
         }
         setRentInfo(rent)
         oneSecRefresh(rent)
+
+        end_rent_button.setOnClickListener {
+            viewModel.endRent(rent, object : BicycleLoadingProvider.EndRentCallBack {
+                override fun onSuccess() {
+                    AppSharedPref().saveWalletCash(
+                        AppSharedPref().getWalletCash(applicationContext) - price,
+                        applicationContext
+                    )
+                    onBackPressed()
+                }
+
+                override fun onFail(throwable: Throwable) {
+                    Toast.makeText(applicationContext, throwable.message, Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
     }
 
     private fun oneSecRefresh(rent: Rent) {
-        text_clock.addTextChangedListener(object: TextWatcher{
-            override fun afterTextChanged(p0: Editable?) {
+        timer = fixedRateTimer("timer", false, 0, 2000) {
+            this@RentedBicycleActivity.runOnUiThread {
                 price = SimpleFunction.testCalculatePriceFromDate(rent.dateStart, rent.price)
             }
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-        })
+        }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        timer.cancel()
+    }
 
     @SuppressLint("SetTextI18n")
     private fun setRentInfo(rent: Rent) {
@@ -88,6 +115,4 @@ class RentedBicycleActivity : AppCompatActivity() {
         else
             getString(BicycleEntity.BICYCLE_AVAILABILITY_FALSE)
     }
-
-
 }

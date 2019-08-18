@@ -23,11 +23,8 @@ data class RentEntity(
     @ColumnInfo(name = "RENT_BICYCLE_ID", index = true)
     var rentBicycleId: Int,
     @ColumnInfo(name = "RENT_BICYCLE_DATE_START", defaultValue = "00-00-00 00:00:00")
-    var dateStart: String
-) : Serializable {
+    var dateStart: String,
     @ColumnInfo(name = "RENT_ID")
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
-
-
-}
+) : Serializable

@@ -11,7 +11,7 @@ import com.apps.mkacik.rentbicycle.dialogs.WalletChargeDialog
 import kotlinx.android.synthetic.main.fragment_wallet.*
 import kotlinx.android.synthetic.main.wallet_status_layout.view.*
 
-class WalletFragment : Fragment(), WalletChargeDialog.OnDismissListener {
+class WalletFragment : Fragment() {
 
     companion object {
         val TAG = this::class.java.name
@@ -29,17 +29,16 @@ class WalletFragment : Fragment(), WalletChargeDialog.OnDismissListener {
 
     private fun onButtonClick() {
         add_cash_button.setOnClickListener {
-            WalletChargeDialog.newInstance(this).show(fragmentManager, WalletChargeDialog.TAG.toString())
-            initWallet()
+            WalletChargeDialog.newInstance().show(fragmentManager, WalletChargeDialog.TAG.toString())
         }
     }
 
-    private fun initWallet() {
+    fun initWallet() {
         val split = AppSharedPref().getWalletCash(requireActivity().baseContext).toString().split(".")
 
         wallet_view.cashInteger.text = split[0]
         wallet_view.cashIntegerExtend.text = resources.getString(R.string.integer_extend)
-        wallet_view.cashRest.text = split[1]
+        wallet_view.cashRest.text = split[1].take(2)
         wallet_view.cashRestExtend.text = resources.getString(R.string.rest_extend)
     }
 
@@ -48,7 +47,5 @@ class WalletFragment : Fragment(), WalletChargeDialog.OnDismissListener {
         return view
     }
 
-    override fun onDismissWalletCharge() {
-        initWallet()
-    }
+
 }

@@ -2,10 +2,26 @@ package com.apps.mkacik.rentbicycle.data
 
 import com.apps.mkacik.rentbicycle.data.database.DatabaseDAO
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
+import com.apps.mkacik.rentbicycle.data.database.entity.Rent
 import com.apps.mkacik.rentbicycle.data.database.entity.RentEntity
 import com.apps.mkacik.rentbicycle.utilities.SimpleFunction
 
 class BicyclesRepository private constructor(private val databaseDAO: DatabaseDAO) : BicycleLoadingProvider {
+
+    override fun endRent(rent: Rent, endRentCallBack: BicycleLoadingProvider.EndRentCallBack) {
+        if (!rent.availability) {
+            databaseDAO.deleteRent(RentEntity(rent.bicycleId, rent.dateStart, rent.id))
+
+            rent.availability = !rent.availability
+
+            val bicycle = BicycleEntity(rent.availability, rent.price, rent.color, rent.brand, rent.bicycleId)
+            databaseDAO.updateBicycle(bicycle)
+
+            endRentCallBack.onSuccess()
+        } else {
+            endRentCallBack.onFail(Throwable("Bike already available"))
+        }
+    }
 
     override fun editBicycle(bicycle: BicycleEntity, editCallBack: BicycleLoadingProvider.EditCallBack) {
         databaseDAO.updateBicycle(bicycle)

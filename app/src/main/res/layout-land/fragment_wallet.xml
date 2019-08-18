@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <com.apps.mkacik.rentbicycle.layouts.WalletStatusLayout
+        android:id="@+id/wallet_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cashInteger="19"
+        app:cashIntegerExtend="zł"
+        app:cashRest="89"
+        app:cashRestExtend="gr"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/wallet_view"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/add_cash_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/oval_rectangle"
+            android:text="@string/add_cash"
+            tools:layout_editor_absoluteX="161dp"
+            tools:layout_editor_absoluteY="295dp" />
+
+        <Button
+            android:id="@+id/transaction_history_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/oval_rectangle"
+            android:text="@string/transaction_history"
+            tools:layout_editor_absoluteX="161dp"
+            tools:layout_editor_absoluteY="295dp" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

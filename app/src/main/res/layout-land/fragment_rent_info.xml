@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background">
@@ -23,16 +22,16 @@
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <Button
-        android:id="@+id/addCashButton"
+        android:id="@+id/end_rent_button"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_margin="8dp"
-        android:padding="5dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/oval_rectangle"
+        android:padding="5dp"
         android:text="@string/end_the_rent"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="@+id/tableLayout"
@@ -44,15 +43,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:background="@drawable/circle"
         android:gravity="center"
         android:text="45"
         android:textColor="@color/colorWhite"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/addCashButton"
+        app:layout_constraintBottom_toTopOf="@+id/end_rent_button"
         app:layout_constraintEnd_toEndOf="@+id/tableLayout"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tableLayout"
         app:layout_constraintTop_toTopOf="parent" />
 
 
