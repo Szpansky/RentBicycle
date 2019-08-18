@@ -48,8 +48,11 @@ class BicyclesAdapter(private val bicycleList: List<BicycleEntity>) :
         fun bind(bicycleEntity: BicycleEntity) {
             itemView.color.text = bicycleEntity.color
             itemView.brand.text = bicycleEntity.brand
-            itemView.price.text = bicycleEntity.price.toString()
-            itemView.status.text = bicycleEntity.status.toString()
+            itemView.price.text = String.format("%.2f ${itemView.resources.getString(R.string.integer_extend)}", bicycleEntity.price)
+            itemView.status.text = if (bicycleEntity.availability)
+                itemView.resources.getString(BicycleEntity.BICYCLE_AVAILABILITY_TRUE)
+            else
+                itemView.resources.getString(BicycleEntity.BICYCLE_AVAILABILITY_FALSE)
             itemView.item_id.text = bicycleEntity.id.toString()
             itemView.item_layout.setOnClickListener { bicycleAdapterInterface?.onItemClick(bicycleEntity) }
             itemView.rent_bicycle.setOnClickListener { bicycleAdapterInterface?.onRentClick(bicycleEntity) }

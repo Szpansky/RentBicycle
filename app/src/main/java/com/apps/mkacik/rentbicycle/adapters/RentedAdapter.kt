@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apps.mkacik.rentbicycle.R
-import com.apps.mkacik.rentbicycle.data.database.entity.RentEntity
+import com.apps.mkacik.rentbicycle.data.database.entity.Rent
 import kotlinx.android.synthetic.main.item_layout_rented_bicycle.view.*
 
-class RentedAdapter(private val rentList: List<RentEntity>) :
+class RentedAdapter(private val rentList: List<Rent>) :
     RecyclerView.Adapter<RentedAdapter.ViewHolder>() {
 
     companion object {
@@ -16,7 +16,7 @@ class RentedAdapter(private val rentList: List<RentEntity>) :
     }
 
     interface RentedAdapterInterface {
-        fun onItemClick(rentEntity: RentEntity)
+        fun onItemClick(rent: Rent)
     }
 
     fun bindInterface(rentedAdapterInterface: RentedAdapterInterface) {
@@ -44,9 +44,9 @@ class RentedAdapter(private val rentList: List<RentEntity>) :
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(rentEntity: RentEntity) {
-            itemView.item_id.text = rentEntity.idBike.toString()
-            itemView.item_layout.setOnClickListener { rentedAdapterInterface?.onItemClick(rentEntity) }
+        fun bind(rent: Rent) {
+            itemView.item_id.text = rent.bicycleId.toString()
+            itemView.item_layout.setOnClickListener { rentedAdapterInterface?.onItemClick(rent) }
         }
     }
 }

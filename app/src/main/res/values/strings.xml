@@ -11,7 +11,7 @@
     <string name="rent_time_start">Rent time start</string>
     <string name="price_for_rent">Price for rent</string>
     <string name="availability">Availability</string>
-    <string name="cost_1_min">Cost / 1 min</string>
+    <string name="cost_1_hour">Cost / 1 hour</string>
     <string name="brand">Brand</string>
     <string name="color">Color</string>
     <string name="sort_by_color">Sort by color</string>
@@ -26,4 +26,6 @@
     <string name="integer_extend">dol</string>
     <string name="rest_extend">cent</string>
     <string name="charge_with">Charge With</string>
+    <string name="available">Available</string>
+    <string name="occupied">Occupied</string>
 </resources>

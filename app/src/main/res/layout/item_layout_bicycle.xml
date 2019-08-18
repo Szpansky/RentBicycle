@@ -83,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="@string/cost_1_min" />
+                    android:text="@string/cost_1_hour" />
 
                 <TextView
                     android:id="@+id/price"

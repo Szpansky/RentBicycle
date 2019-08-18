@@ -9,9 +9,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.apps.mkacik.rentbicycle.R
+import com.apps.mkacik.rentbicycle.activities.RentedBicycleActivity
 import com.apps.mkacik.rentbicycle.adapters.RentedAdapter
 import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
-import com.apps.mkacik.rentbicycle.data.database.entity.RentEntity
+import com.apps.mkacik.rentbicycle.data.database.entity.Rent
 import com.apps.mkacik.rentbicycle.utilities.InjectorUtils
 import com.apps.mkacik.rentbicycle.viewModels.RentedViewModel
 import kotlinx.android.synthetic.main.list_layout.*
@@ -56,7 +57,7 @@ class RentedListFragment private constructor() : BaseListFragment(), RentedAdapt
 
     override fun loadData() {
         viewModel.getRentedBicycles(object : BicycleLoadingProvider.GetRentBicyclesCallBack {
-            override fun onSuccess(bicycleList: LiveData<List<RentEntity>>) {
+            override fun onSuccess(bicycleList: LiveData<List<Rent>>) {
                 bicycleList.observe(lifecycleOwner, Observer { bicycles ->
 
                     recycle_view.adapter = RentedAdapter(bicycles)
@@ -79,7 +80,7 @@ class RentedListFragment private constructor() : BaseListFragment(), RentedAdapt
         recycle.layoutManager = StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL)
     }
 
-    override fun onItemClick(rentEntity: RentEntity) {
-
+    override fun onItemClick(rent: Rent) {
+        requireContext().startActivity(RentedBicycleActivity.newIntent(requireContext(), rent))
     }
 }

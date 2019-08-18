@@ -3,6 +3,7 @@ package com.apps.mkacik.rentbicycle.data
 import com.apps.mkacik.rentbicycle.data.database.DatabaseDAO
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 import com.apps.mkacik.rentbicycle.data.database.entity.RentEntity
+import com.apps.mkacik.rentbicycle.utilities.SimpleFunction
 
 class BicyclesRepository private constructor(private val databaseDAO: DatabaseDAO) : BicycleLoadingProvider {
 
@@ -23,13 +24,13 @@ class BicyclesRepository private constructor(private val databaseDAO: DatabaseDA
     }
 
     override fun getRentBicycles(rentBicyclesCallBack: BicycleLoadingProvider.GetRentBicyclesCallBack) {
-        rentBicyclesCallBack.onSuccess(databaseDAO.getRents())
+        rentBicyclesCallBack.onSuccess(databaseDAO.getRentsWithBicycle())
     }
 
     override fun rentBicycle(bicycle: BicycleEntity, rentCallBack: BicycleLoadingProvider.RentCallBack) {
-        if (bicycle.status) {
-            databaseDAO.saveRent(RentEntity(bicycle.id, System.currentTimeMillis().toString()))
-            bicycle.status = !bicycle.status
+        if (bicycle.availability) {
+            databaseDAO.saveRent(RentEntity(bicycle.id, SimpleFunction.getCurrentDate()))
+            bicycle.availability = !bicycle.availability
             databaseDAO.updateBicycle(bicycle)
             rentCallBack.onSuccess()
         } else {

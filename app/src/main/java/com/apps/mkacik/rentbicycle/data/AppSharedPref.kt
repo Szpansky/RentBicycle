@@ -3,7 +3,6 @@ package com.apps.mkacik.rentbicycle.data
 import android.content.Context
 import android.content.SharedPreferences
 
-//TODO export to repository
 class AppSharedPref {
 
     companion object {
