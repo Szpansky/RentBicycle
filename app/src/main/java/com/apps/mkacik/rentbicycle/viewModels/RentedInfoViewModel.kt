@@ -1,13 +1,27 @@
 package com.apps.mkacik.rentbicycle.viewModels
 
-import androidx.lifecycle.ViewModel
-import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
-import com.apps.mkacik.rentbicycle.data.BicyclesRepository
-import com.apps.mkacik.rentbicycle.data.database.entity.Rent
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import com.apps.mkacik.rentbicycle.data.BicycleRepo
+import com.apps.mkacik.rentbicycle.data.database.model.Rent
+import com.apps.mkacik.rentbicycle.utilities.DaggerAppComponent
+import com.apps.mkacik.rentbicycle.utilities.RoomModule
+import javax.inject.Inject
 
-class RentedInfoViewModel(private val repository: BicyclesRepository) : ViewModel() {
+class RentedInfoViewModel(application: Application) : AndroidViewModel(application) {
 
-    fun endRent(rent: Rent, callBack: BicycleLoadingProvider.EndRentCallBack) {
-        repository.endRent(rent, callBack)
+    @Inject
+    lateinit var bicycleRepo: BicycleRepo
+
+    init {
+        DaggerAppComponent.builder()
+            .roomModule(RoomModule(application))
+            .build()
+            .inject(this)
+    }
+
+
+    fun endRent(rent: Rent, callBack: BicycleRepo.EndRentCallBack) {
+        bicycleRepo.endRent(rent, callBack)
     }
 }

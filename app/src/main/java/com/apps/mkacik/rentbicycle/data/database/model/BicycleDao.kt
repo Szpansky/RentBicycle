@@ -1,9 +1,10 @@
-package com.apps.mkacik.rentbicycle.data.database.entity
+package com.apps.mkacik.rentbicycle.data.database.model
 
 import androidx.lifecycle.LiveData
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 
 interface BicycleDao {
 

@@ -9,9 +9,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.apps.mkacik.rentbicycle.R
 import com.apps.mkacik.rentbicycle.adapters.BicyclesAdapter
-import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
+import com.apps.mkacik.rentbicycle.data.BicycleRepo
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
-import com.apps.mkacik.rentbicycle.utilities.InjectorUtils
 import com.apps.mkacik.rentbicycle.viewModels.BicyclesViewModel
 import kotlinx.android.synthetic.main.list_layout.*
 
@@ -23,7 +22,7 @@ class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterIn
     val bicycleAdapterInterface: BicyclesAdapter.BicycleAdapterInterface = this
 
     companion object {
-        val TAG = this::class.java.name
+        val TAG = "BicycleListFragment"
         const val NAME = "Bicycles List"
 
         fun newInstance(): BicycleListFragment {
@@ -35,8 +34,9 @@ class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterIn
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.list_layout, container, false)
         setHasOptionsMenu(true)
-        val factory = InjectorUtils.provideBicyclesViewModelFactory()
-        viewModel = ViewModelProviders.of(this, factory).get(BicyclesViewModel::class.java)
+
+        viewModel = ViewModelProviders.of(this).get(BicyclesViewModel::class.java)
+
         return view
     }
 
@@ -62,16 +62,19 @@ class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterIn
 
     override fun setTitle(): CharSequence? = NAME
 
+    /*  override fun loadData(){
+          viewModel.loadData().observe(this, Observer {
+              recycle_view.adapter = BicyclesAdapter(it,this)
+          })
+      }*/
+
 
     override fun loadData() {
-        viewModel.getBicycles(object : BicycleLoadingProvider.GetCallBack {
+        viewModel.getBicycles(object : BicycleRepo.GetCallBack {
 
             override fun onSuccess(bicycleList: LiveData<List<BicycleEntity>>) {
                 bicycleList.observe(lifecycleOwner, Observer { bicycles ->
-
-                    recycle_view.adapter = BicyclesAdapter(bicycles)
-                    (recycle_view.adapter as BicyclesAdapter).bindInterface(bicycleAdapterInterface)
-
+                    recycle_view.adapter = BicyclesAdapter(bicycles, bicycleAdapterInterface)
                 })
             }
 
@@ -93,7 +96,7 @@ class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterIn
     override fun onRentClick(bicycleEntity: BicycleEntity) {
         infoToast("RENT CLICK")
 
-        viewModel.rentBicycle(bicycleEntity, object : BicycleLoadingProvider.RentCallBack {
+        viewModel.rentBicycle(bicycleEntity, object : BicycleRepo.RentCallBack {
             override fun onSuccess() {
                 infoToast("ADDED")
             }

@@ -11,9 +11,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.apps.mkacik.rentbicycle.R
 import com.apps.mkacik.rentbicycle.activities.RentedBicycleActivity
 import com.apps.mkacik.rentbicycle.adapters.RentedAdapter
-import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
-import com.apps.mkacik.rentbicycle.data.database.entity.Rent
-import com.apps.mkacik.rentbicycle.utilities.InjectorUtils
+import com.apps.mkacik.rentbicycle.data.BicycleRepo
+import com.apps.mkacik.rentbicycle.data.database.model.Rent
 import com.apps.mkacik.rentbicycle.viewModels.RentedViewModel
 import kotlinx.android.synthetic.main.list_layout.*
 
@@ -25,7 +24,7 @@ class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterf
     val rentedAdapterInterface: RentedAdapter.RentedAdapterInterface = this
 
     companion object {
-        val TAG = this::class.java.name
+        val TAG = "RentedListFragment"
         const val NAME = "Rented Bicycles"
         const val SPAN_COUNT = 2
 
@@ -37,8 +36,8 @@ class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterf
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.list_layout, container, false)
-        val factory = InjectorUtils.provideRentedViewModelFactory()
-        viewModel = ViewModelProviders.of(this, factory).get(RentedViewModel::class.java)
+
+        viewModel = ViewModelProviders.of(this).get(RentedViewModel::class.java)
         return view
     }
 
@@ -56,7 +55,7 @@ class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterf
 
 
     override fun loadData() {
-        viewModel.getRentedBicycles(object : BicycleLoadingProvider.GetRentBicyclesCallBack {
+        viewModel.getRentedBicycles(object : BicycleRepo.GetRentBicyclesCallBack {
             override fun onSuccess(bicycleList: LiveData<List<Rent>>) {
                 bicycleList.observe(lifecycleOwner, Observer { bicycles ->
 

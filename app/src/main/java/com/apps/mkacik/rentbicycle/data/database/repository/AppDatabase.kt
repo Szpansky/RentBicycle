@@ -1,4 +1,4 @@
-package com.apps.mkacik.rentbicycle.data.database
+package com.apps.mkacik.rentbicycle.data.database.repository
 
 import android.content.Context
 import androidx.room.Database
@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 import com.apps.mkacik.rentbicycle.data.database.entity.RentEntity
 import com.apps.mkacik.rentbicycle.data.database.entity.TransactionLogEntity
+import com.apps.mkacik.rentbicycle.data.database.model.DatabaseDAO
 
 @Database(
     entities = [(BicycleEntity::class), (RentEntity::class), (TransactionLogEntity::class)],
@@ -37,4 +38,5 @@ abstract class AppDatabase : RoomDatabase() {
         ).allowMainThreadQueries()
             .build()
     }
+
 }

@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.wallet_status_layout.view.*
 class WalletFragment : Fragment() {
 
     companion object {
-        val TAG = this::class.java.name
+        val TAG = "WalletFragment"
 
         fun newInstance(): WalletFragment {
             return WalletFragment()

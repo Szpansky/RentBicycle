@@ -1,24 +1,37 @@
 package com.apps.mkacik.rentbicycle.data
 
-import com.apps.mkacik.rentbicycle.data.database.DatabaseDAO
+import androidx.lifecycle.LiveData
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
-import com.apps.mkacik.rentbicycle.data.database.entity.Rent
 import com.apps.mkacik.rentbicycle.data.database.entity.RentEntity
+import com.apps.mkacik.rentbicycle.data.database.model.DatabaseDAO
+import com.apps.mkacik.rentbicycle.data.database.model.Rent
 import com.apps.mkacik.rentbicycle.utilities.SimpleFunction
+import javax.inject.Inject
 
-class BicyclesRepository private constructor(private val databaseDAO: DatabaseDAO) : BicycleLoadingProvider {
+class BicycleDataSource : BicycleRepo {
+
+    override fun getBicycles(): LiveData<List<BicycleEntity>> {
+        return databaseDao.getBicycles()
+    }
 
 
+    private val databaseDao: DatabaseDAO
 
 
-    override fun endRent(rent: Rent, endRentCallBack: BicycleLoadingProvider.EndRentCallBack) {
+    @Inject
+    constructor(databaseDao: DatabaseDAO) {
+        this.databaseDao = databaseDao
+    }
+
+
+    override fun endRent(rent: Rent, endRentCallBack: BicycleRepo.EndRentCallBack) {
         if (!rent.availability) {
-            databaseDAO.deleteRent(RentEntity(rent.bicycleId, rent.dateStart, rent.id))
+            databaseDao.deleteRent(RentEntity(rent.bicycleId, rent.dateStart, rent.id))
 
             rent.availability = !rent.availability
 
             val bicycle = BicycleEntity(rent.availability, rent.price, rent.color, rent.brand, rent.bicycleId)
-            databaseDAO.updateBicycle(bicycle)
+            databaseDao.updateBicycle(bicycle)
 
             endRentCallBack.onSuccess()
         } else {
@@ -26,53 +39,44 @@ class BicyclesRepository private constructor(private val databaseDAO: DatabaseDA
         }
     }
 
-    override fun editBicycle(bicycle: BicycleEntity, editCallBack: BicycleLoadingProvider.EditCallBack) {
-        databaseDAO.updateBicycle(bicycle)
+    override fun editBicycle(bicycle: BicycleEntity, editCallBack: BicycleRepo.EditCallBack) {
+        databaseDao.updateBicycle(bicycle)
         editCallBack.onSuccess()
     }
 
-    fun deleteData() {
-        databaseDAO.deleteTableBicycles()
-        databaseDAO.deleteTableRents()
-        databaseDAO.deleteTableTransactionLogs()
+    override fun deleteData() {
+        databaseDao.deleteTableBicycles()
+        databaseDao.deleteTableRents()
+        databaseDao.deleteTableTransactionLogs()
     }
 
-    override fun addBicycles(bicycles: List<BicycleEntity>, addListCallBack: BicycleLoadingProvider.AddListCallBack) {
-        databaseDAO.saveBicycles(bicycles)
+    override fun addBicycles(bicycles: List<BicycleEntity>, addListCallBack: BicycleRepo.AddListCallBack) {
+        databaseDao.saveBicycles(bicycles)
         addListCallBack.onSuccess()
     }
 
-    override fun getRentBicycles(rentBicyclesCallBack: BicycleLoadingProvider.GetRentBicyclesCallBack) {
-        rentBicyclesCallBack.onSuccess(databaseDAO.getRentsWithBicycle())
+    override fun getRentBicycles(rentBicyclesCallBack: BicycleRepo.GetRentBicyclesCallBack) {
+        rentBicyclesCallBack.onSuccess(databaseDao.getRentsWithBicycle())
     }
 
-    override fun rentBicycle(bicycle: BicycleEntity, rentCallBack: BicycleLoadingProvider.RentCallBack) {
+    override fun rentBicycle(bicycle: BicycleEntity, rentCallBack: BicycleRepo.RentCallBack) {
         if (bicycle.availability) {
-            databaseDAO.saveRent(RentEntity(bicycle.id, SimpleFunction.getCurrentDate()))
+            databaseDao.saveRent(RentEntity(bicycle.id, SimpleFunction.getCurrentDate()))
             bicycle.availability = !bicycle.availability
-            databaseDAO.updateBicycle(bicycle)
+            databaseDao.updateBicycle(bicycle)
             rentCallBack.onSuccess()
         } else {
             rentCallBack.onFail(Throwable("Bike already occupied"))
         }
     }
 
-    override fun addBicycle(bicycle: BicycleEntity, addCallBack: BicycleLoadingProvider.AddCallBack) {
-        databaseDAO.saveBicycle(bicycle)
+    override fun addBicycle(bicycle: BicycleEntity, addCallBack: BicycleRepo.AddCallBack) {
+        databaseDao.saveBicycle(bicycle)
         addCallBack.onSuccess()
     }
 
-    override fun getBicycles(getCallBack: BicycleLoadingProvider.GetCallBack) {
-        getCallBack.onSuccess(databaseDAO.getBicycles())
+    override fun getBicycles(getCallBack: BicycleRepo.GetCallBack) {
+        getCallBack.onSuccess(databaseDao.getBicycles())
     }
 
-    companion object {
-        @Volatile
-        private var instance: BicyclesRepository? = null
-
-        fun getInstance(databaseDAO: DatabaseDAO) =
-            instance ?: synchronized(this) {
-                instance ?: BicyclesRepository(databaseDAO).also { instance = it }
-            }
-    }
 }

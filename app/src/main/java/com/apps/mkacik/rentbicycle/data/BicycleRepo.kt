@@ -2,9 +2,9 @@ package com.apps.mkacik.rentbicycle.data
 
 import androidx.lifecycle.LiveData
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
-import com.apps.mkacik.rentbicycle.data.database.entity.Rent
+import com.apps.mkacik.rentbicycle.data.database.model.Rent
 
-interface BicycleLoadingProvider {
+interface BicycleRepo {
 
     fun endRent(rent: Rent, endRentCallBack: EndRentCallBack)
 
@@ -36,6 +36,8 @@ interface BicycleLoadingProvider {
 
     fun getBicycles(getCallBack: GetCallBack)
 
+    fun getBicycles(): LiveData<List<BicycleEntity>>
+
     interface GetCallBack {
         fun onSuccess(bicycleList: LiveData<List<BicycleEntity>>)
         fun onFail(throwable: Throwable)
@@ -54,4 +56,6 @@ interface BicycleLoadingProvider {
         fun onSuccess(bicycleList: LiveData<List<Rent>>)
         fun onFail(throwable: Throwable)
     }
+
+    fun deleteData()
 }
