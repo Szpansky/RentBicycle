@@ -1,16 +1,24 @@
 package com.apps.mkacik.rentbicycle.viewModels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 
-class BicyclesViewModel(private val repository: BicycleLoadingProvider) : ViewModel() {
 
-    fun getBicycles(getCallBack: BicycleLoadingProvider.GetCallBack) {
-        repository.getBicycles(getCallBack)
+class BicyclesViewModel(private val bicyclesRepository: BicycleLoadingProvider) : ViewModel() {
+
+    fun getLiveData(): LiveData<List<BicycleEntity>> {
+        return bicyclesRepository.getBicycles()
     }
 
+
+    fun getBicycles(getCallBack: BicycleLoadingProvider.GetCallBack) {
+        bicyclesRepository.getBicycles(getCallBack)
+    }
+
+
     fun rentBicycle(bicycle: BicycleEntity, rentCallBack: BicycleLoadingProvider.RentCallBack) {
-        repository.rentBicycle(bicycle, rentCallBack)
+        bicyclesRepository.rentBicycle(bicycle, rentCallBack)
     }
 }

@@ -3,6 +3,9 @@ package com.apps.mkacik.rentbicycle.utilities
 import android.app.Application
 import android.content.Context
 
+/**
+ * TMP CLass for getting context
+ */
 class App : Application() {
 
     init {

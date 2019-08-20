@@ -54,4 +54,7 @@ interface BicycleLoadingProvider {
         fun onSuccess(bicycleList: LiveData<List<Rent>>)
         fun onFail(throwable: Throwable)
     }
+
+    fun getBicycles(): LiveData<List<BicycleEntity>>
+    fun deleteData()
 }
