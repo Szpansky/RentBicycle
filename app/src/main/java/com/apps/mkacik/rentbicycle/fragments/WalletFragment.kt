@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.wallet_status_layout.view.*
 class WalletFragment : Fragment() {
 
     companion object {
-        val TAG = "WalletFragment"
+        val TAG = this::class.java.name
 
         fun newInstance(): WalletFragment {
             return WalletFragment()
@@ -43,9 +43,7 @@ class WalletFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_wallet, container, false)
-        return view
+        return inflater.inflate(R.layout.fragment_wallet, container, false)
     }
-
 
 }

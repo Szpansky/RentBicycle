@@ -25,8 +25,7 @@ class WalletChargeDialog : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.dialog_wallet_charge, container, false)
-        return view
+        return inflater.inflate(R.layout.dialog_wallet_charge, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

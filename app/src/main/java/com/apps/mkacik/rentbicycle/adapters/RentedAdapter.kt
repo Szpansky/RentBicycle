@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apps.mkacik.rentbicycle.R
-import com.apps.mkacik.rentbicycle.data.database.model.Rent
+import com.apps.mkacik.rentbicycle.data.database.entity.Rent
 import kotlinx.android.synthetic.main.item_layout_rented_bicycle.view.*
 
 class RentedAdapter(private val rentList: List<Rent>) :

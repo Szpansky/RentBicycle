@@ -9,9 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.apps.mkacik.rentbicycle.R
 import com.apps.mkacik.rentbicycle.data.AppSharedPref
-import com.apps.mkacik.rentbicycle.data.BicycleRepo
+import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
-import com.apps.mkacik.rentbicycle.data.database.model.Rent
+import com.apps.mkacik.rentbicycle.data.database.entity.Rent
+import com.apps.mkacik.rentbicycle.utilities.InjectorUtils
 import com.apps.mkacik.rentbicycle.utilities.SimpleFunction
 import com.apps.mkacik.rentbicycle.viewModels.RentedInfoViewModel
 import kotlinx.android.synthetic.main.fragment_rent_info.*
@@ -57,23 +58,20 @@ class RentedBicycleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_rent_info)
 
-
-        viewModel = ViewModelProviders.of(this).get(RentedInfoViewModel::class.java)
+        val factory = InjectorUtils.provideRentedInfoViewModelFactory()
+        viewModel = ViewModelProviders.of(this, factory).get(RentedInfoViewModel::class.java)
 
         if (savedInstanceState == null) {
             rent = intent.getSerializableExtra(RENT) as Rent
+
         } else {
             rent = savedInstanceState.getSerializable(RENT) as Rent
         }
         setRentInfo(rent)
         oneSecRefresh(rent)
-        onButtonClick()
-    }
 
-
-    private fun onButtonClick() {
         end_rent_button.setOnClickListener {
-            viewModel.endRent(rent, object : BicycleRepo.EndRentCallBack {
+            viewModel.endRent(rent, object : BicycleLoadingProvider.EndRentCallBack {
                 override fun onSuccess() {
                     AppSharedPref().saveWalletCash(
                         AppSharedPref().getWalletCash(applicationContext) - price,
@@ -89,7 +87,6 @@ class RentedBicycleActivity : AppCompatActivity() {
         }
     }
 
-
     private fun oneSecRefresh(rent: Rent) {
         timer = fixedRateTimer("timer", false, 0, 2000) {
             this@RentedBicycleActivity.runOnUiThread {
@@ -98,12 +95,10 @@ class RentedBicycleActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
         timer.cancel()
     }
-
 
     @SuppressLint("SetTextI18n")
     private fun setRentInfo(rent: Rent) {

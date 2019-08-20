@@ -1,67 +1,55 @@
 package com.apps.mkacik.rentbicycle.utilities
 
-import android.app.Application
 import androidx.room.Room
-import com.apps.mkacik.rentbicycle.data.BicycleDataSource
-import com.apps.mkacik.rentbicycle.data.BicycleRepo
-import com.apps.mkacik.rentbicycle.data.database.model.DatabaseDAO
-import com.apps.mkacik.rentbicycle.data.database.repository.AppDatabase
+import com.apps.mkacik.rentbicycle.data.BicyclesRepository
+import com.apps.mkacik.rentbicycle.data.database.AppDatabase
+import com.apps.mkacik.rentbicycle.data.database.DatabaseDAO
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-
 @Module
 class RoomModule {
-    
-    private var appDatabase : AppDatabase
 
-    constructor(application: Application){
-        appDatabase = buildDatabase(application)
-    }
+    @Provides
+    @Singleton
+    fun provideDatabase() = invoke()
 
 
+    @Module
     companion object {
         @Volatile
         private var instance: AppDatabase? = null
         private val LOCK = Any()
         const val NAME = "RentBicycleDatabase.db"
 
-        operator fun invoke(application: Application) =
+        operator fun invoke() =
             instance
                 ?: synchronized(LOCK) {
                     instance
-                        ?: buildDatabase(
-                            application
-                        ).also { instance = it }
+                        ?: buildDatabase().also { instance = it }
                 }
 
-        private fun buildDatabase(application: Application) = Room.databaseBuilder(
-            application,
+        private fun buildDatabase() = Room.databaseBuilder(
+            App.applicationContext(),
             AppDatabase::class.java,
             NAME
         ).allowMainThreadQueries()
             .build()
+
     }
 
 
-    @Singleton
     @Provides
-    fun provideRoomDatabase() : AppDatabase{
-        return appDatabase
-    }
-
-
     @Singleton
-    @Provides
-    fun providesDatabaseDao(appDatabase: AppDatabase) : DatabaseDAO{
-        return appDatabase.rentBicycleDAO()
+    fun providesDatabaseDao(appDatabase: AppDatabase): DatabaseDAO {
+        return appDatabase.databaseDao()
     }
 
+
+    @Provides
     @Singleton
-    @Provides
-    fun bicycleRepo(databaseDAO: DatabaseDAO) : BicycleRepo{
-        return BicycleDataSource(databaseDAO)
+    fun providesBicycleRepository(databaseDao: DatabaseDAO): BicyclesRepository {
+        return BicyclesRepository(databaseDao)
     }
-
 }

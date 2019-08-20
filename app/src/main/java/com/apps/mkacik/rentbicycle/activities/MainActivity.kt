@@ -8,29 +8,24 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.apps.mkacik.rentbicycle.R
 import com.apps.mkacik.rentbicycle.data.AppSharedPref
-import com.apps.mkacik.rentbicycle.data.BicycleRepo
+import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 import com.apps.mkacik.rentbicycle.dialogs.FirstRunDialog
 import com.apps.mkacik.rentbicycle.fragments.BicycleListFragment
 import com.apps.mkacik.rentbicycle.fragments.RentedListFragment
 import com.apps.mkacik.rentbicycle.fragments.WalletFragment
-import com.apps.mkacik.rentbicycle.utilities.AppModule
 import com.apps.mkacik.rentbicycle.utilities.DaggerAppComponent
-import com.apps.mkacik.rentbicycle.utilities.RoomModule
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     FirstRunDialog.FirstRunDialogInterface {
 
-    @Inject
-    lateinit var bicycleRepo: BicycleRepo
-
     override fun prepareDatabase() {
-        bicycleRepo.deleteData()
+        val bicycleRepository = DaggerAppComponent.builder().build().providesBicycleRepository()
+        bicycleRepository.deleteData()
         val bicycles: List<BicycleEntity> = listOf(
             BicycleEntity(false, 2.2F, "Red", "Cross"),
             BicycleEntity(true, 1.2F, "Blue", "Cross"),
@@ -44,7 +39,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             BicycleEntity(true, 1.9F, "Pink", "Rover")
         )
 
-        bicycleRepo.addBicycles(bicycles, object : BicycleRepo.AddListCallBack {
+        bicycleRepository.addBicycles(bicycles, object : BicycleLoadingProvider.AddListCallBack {
             override fun onSuccess() {
             }
 
@@ -99,13 +94,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
 
         initThisActivity()
-
-        DaggerAppComponent.builder()
-            .appModule(AppModule(application))
-            .roomModule(RoomModule(application))
-            .build()
-            .inject(this)
-
 
         if (savedInstanceState == null) {
             createBicycleFragment()

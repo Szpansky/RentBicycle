@@ -1,8 +1,8 @@
 package com.apps.mkacik.rentbicycle.utilities
 
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import java.text.SimpleDateFormat
 
 
 object SimpleFunction {
@@ -65,8 +65,8 @@ object SimpleFunction {
      */
     fun testCalculatePriceFromDate(fromDate: String, priceForHour: Float): Float {
         val currentDate = getCurrentDate()
-        val secondsLeft : Float = getSecondsLeft(fromDate, currentDate).toFloat()
-        return (secondsLeft * (priceForHour / 10) )
+        val secondsLeft: Float = getSecondsLeft(fromDate, currentDate).toFloat()
+        return (secondsLeft * (priceForHour / 10))
     }
 
 }

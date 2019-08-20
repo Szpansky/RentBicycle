@@ -12,6 +12,7 @@ abstract class BaseListFragment : Fragment() {
     fun infoToast(info: String) {
         Toast.makeText(context, info, Toast.LENGTH_SHORT).show()
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(hasOptionMenuEnabled())
@@ -28,7 +29,7 @@ abstract class BaseListFragment : Fragment() {
 
     abstract fun getRecycleView(): RecyclerView
 
-    open fun setRecycleLayoutManager(recycle : RecyclerView) {
+    open fun setRecycleLayoutManager(recycle: RecyclerView) {
         recycle.layoutManager = LinearLayoutManager(context)
     }
 }

@@ -1,4 +1,4 @@
-package com.apps.mkacik.rentbicycle.data.database.model
+package com.apps.mkacik.rentbicycle.data.database.entity
 
 import androidx.room.ColumnInfo
 import java.io.Serializable

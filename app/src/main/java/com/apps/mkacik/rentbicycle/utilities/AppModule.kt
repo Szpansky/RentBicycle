@@ -6,19 +6,14 @@ import dagger.Provides
 import javax.inject.Singleton
 
 
-@Module
-class AppModule {
+class AppModule(application: Application) {
 
-
-    var mApplication: Application
-
-    constructor (application: Application) {
-        mApplication = application
-    }
+/*
+    private val mApplication: Application = application
 
     @Provides
     @Singleton
     fun providesApplication(): Application {
         return mApplication
-    }
+    }*/
 }
