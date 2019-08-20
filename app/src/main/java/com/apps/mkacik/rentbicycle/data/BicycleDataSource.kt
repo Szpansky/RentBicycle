@@ -8,6 +8,9 @@ import com.apps.mkacik.rentbicycle.utilities.SimpleFunction
 
 class BicyclesRepository private constructor(private val databaseDAO: DatabaseDAO) : BicycleLoadingProvider {
 
+
+
+
     override fun endRent(rent: Rent, endRentCallBack: BicycleLoadingProvider.EndRentCallBack) {
         if (!rent.availability) {
             databaseDAO.deleteRent(RentEntity(rent.bicycleId, rent.dateStart, rent.id))
