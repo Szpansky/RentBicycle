@@ -43,6 +43,7 @@ My Bicycle Rent info Port Landscape
 * [MVVM] - architecture
 * [ROOM] - database
 * [LiveData] - data mangament
+* [Dagger 2] - dependency injection
 
 ## Authors
 
