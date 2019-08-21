@@ -3,24 +3,30 @@ package com.apps.mkacik.rentbicycle.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.apps.mkacik.rentbicycle.data.BicyclesRepository
+import javax.inject.Inject
 
-class ViewModelFactory {
+class ViewModelFactory @Inject constructor() {
 
-    class RentedInfo(private val bicyclesRepository: BicyclesRepository) : ViewModelProvider.NewInstanceFactory() {
+    class RentedInfo @Inject constructor(val bicyclesRepository: BicyclesRepository) :
+        ViewModelProvider.NewInstanceFactory() {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return RentedInfoViewModel(bicyclesRepository) as T
         }
     }
 
-    class RentedBicycles(private val bicyclesRepository: BicyclesRepository) : ViewModelProvider.NewInstanceFactory() {
+
+    class RentedBicycles @Inject constructor(val bicyclesRepository: BicyclesRepository) :
+        ViewModelProvider.NewInstanceFactory() {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return RentedViewModel(bicyclesRepository) as T
         }
     }
 
-    class Bicycles(private val bicyclesRepository: BicyclesRepository) : ViewModelProvider.NewInstanceFactory() {
+
+    class Bicycles @Inject constructor(val bicyclesRepository: BicyclesRepository) :
+        ViewModelProvider.NewInstanceFactory() {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return BicyclesViewModel(bicyclesRepository) as T

@@ -27,4 +27,6 @@ data class RentEntity(
     @ColumnInfo(name = "RENT_ID")
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
+    //  @Embedded
+    // val bicycle: Bicycle
 ) : Serializable

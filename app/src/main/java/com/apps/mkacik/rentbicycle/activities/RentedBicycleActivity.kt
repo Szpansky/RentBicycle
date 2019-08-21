@@ -12,16 +12,23 @@ import com.apps.mkacik.rentbicycle.data.AppSharedPref
 import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 import com.apps.mkacik.rentbicycle.data.database.entity.Rent
-import com.apps.mkacik.rentbicycle.utilities.InjectorUtils
+import com.apps.mkacik.rentbicycle.utilities.AppModule
+import com.apps.mkacik.rentbicycle.utilities.DaggerAppComponent
+import com.apps.mkacik.rentbicycle.utilities.RoomModule
 import com.apps.mkacik.rentbicycle.utilities.SimpleFunction
 import com.apps.mkacik.rentbicycle.viewModels.RentedInfoViewModel
+import com.apps.mkacik.rentbicycle.viewModels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_rent_info.*
 import java.util.*
+import javax.inject.Inject
 import kotlin.concurrent.fixedRateTimer
 import kotlin.properties.Delegates
 
 
 class RentedBicycleActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var factory: ViewModelFactory.RentedInfo
 
     private lateinit var viewModel: RentedInfoViewModel
     lateinit var rent: Rent
@@ -42,11 +49,13 @@ class RentedBicycleActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         rent = savedInstanceState.getSerializable(RENT) as Rent
         price = savedInstanceState.getFloat(PRICE)
     }
+
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -54,22 +63,34 @@ class RentedBicycleActivity : AppCompatActivity() {
         outState.putFloat(PRICE, price)
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_rent_info)
-
-        val factory = InjectorUtils.provideRentedInfoViewModelFactory()
+        injectDependencies()
         viewModel = ViewModelProviders.of(this, factory).get(RentedInfoViewModel::class.java)
 
         if (savedInstanceState == null) {
             rent = intent.getSerializableExtra(RENT) as Rent
-
         } else {
             rent = savedInstanceState.getSerializable(RENT) as Rent
         }
         setRentInfo(rent)
         oneSecRefresh(rent)
+        onButtonClick()
+    }
 
+
+    private fun injectDependencies(){
+        DaggerAppComponent.builder()
+            .roomModule(RoomModule())
+            .appModule(AppModule(this))
+            .build()
+            .inject(this)
+    }
+
+
+    private fun onButtonClick(){
         end_rent_button.setOnClickListener {
             viewModel.endRent(rent, object : BicycleLoadingProvider.EndRentCallBack {
                 override fun onSuccess() {
@@ -79,13 +100,13 @@ class RentedBicycleActivity : AppCompatActivity() {
                     )
                     onBackPressed()
                 }
-
                 override fun onFail(throwable: Throwable) {
                     Toast.makeText(applicationContext, throwable.message, Toast.LENGTH_SHORT).show()
                 }
             })
         }
     }
+
 
     private fun oneSecRefresh(rent: Rent) {
         timer = fixedRateTimer("timer", false, 0, 2000) {
@@ -95,10 +116,12 @@ class RentedBicycleActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
         timer.cancel()
     }
+
 
     @SuppressLint("SetTextI18n")
     private fun setRentInfo(rent: Rent) {

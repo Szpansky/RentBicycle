@@ -13,16 +13,24 @@ import com.apps.mkacik.rentbicycle.activities.RentedBicycleActivity
 import com.apps.mkacik.rentbicycle.adapters.RentedAdapter
 import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
 import com.apps.mkacik.rentbicycle.data.database.entity.Rent
-import com.apps.mkacik.rentbicycle.utilities.InjectorUtils
+import com.apps.mkacik.rentbicycle.utilities.AppModule
+import com.apps.mkacik.rentbicycle.utilities.DaggerAppComponent
+import com.apps.mkacik.rentbicycle.utilities.RoomModule
 import com.apps.mkacik.rentbicycle.viewModels.RentedViewModel
+import com.apps.mkacik.rentbicycle.viewModels.ViewModelFactory
 import kotlinx.android.synthetic.main.list_layout.*
+import javax.inject.Inject
 
 class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterface {
+
+    @Inject
+    lateinit var factory: ViewModelFactory.RentedBicycles
 
     private lateinit var viewModel: RentedViewModel
 
     val lifecycleOwner: LifecycleOwner = this
     val rentedAdapterInterface: RentedAdapter.RentedAdapterInterface = this
+
 
     companion object {
         val TAG = this::class.java.name
@@ -35,9 +43,14 @@ class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterf
     }
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        injectDependencies()
+    }
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.list_layout, container, false)
-        val factory = InjectorUtils.provideRentedViewModelFactory()
         viewModel = ViewModelProviders.of(this, factory).get(RentedViewModel::class.java)
         return view
     }
@@ -70,6 +83,15 @@ class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterf
                 infoToast("ERROR ${throwable.message}")
             }
         })
+    }
+
+
+    private fun injectDependencies(){
+        DaggerAppComponent.builder()
+            .roomModule(RoomModule())
+            .appModule(AppModule(requireContext()))
+            .build()
+            .inject(this)
     }
 
 

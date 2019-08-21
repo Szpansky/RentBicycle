@@ -3,21 +3,23 @@ package com.apps.mkacik.rentbicycle.utilities
 import android.app.Application
 import android.content.Context
 
-/**
- * TMP CLass for getting context
- */
+
 class App : Application() {
 
-    init {
-        instance = this
+    val appComponent: AppComponent by lazy {
+        generateAppComponent()
     }
 
     companion object {
-        private var instance: App? = null
-
-        fun applicationContext(): Context {
-            return instance!!.applicationContext
+        fun getApplication(context: Context): App {
+            return context.applicationContext as App
         }
     }
 
+    private fun generateAppComponent(): AppComponent {
+        return DaggerAppComponent.builder().run {
+            appModule(AppModule(this@App))
+            build()
+        }
+    }
 }

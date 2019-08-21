@@ -10,11 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.apps.mkacik.rentbicycle.R
 import com.apps.mkacik.rentbicycle.adapters.BicyclesAdapter
 import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
-import com.apps.mkacik.rentbicycle.data.BicyclesRepository
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 import com.apps.mkacik.rentbicycle.utilities.AppModule
 import com.apps.mkacik.rentbicycle.utilities.DaggerAppComponent
-import com.apps.mkacik.rentbicycle.utilities.InjectorUtils
 import com.apps.mkacik.rentbicycle.utilities.RoomModule
 import com.apps.mkacik.rentbicycle.viewModels.BicyclesViewModel
 import com.apps.mkacik.rentbicycle.viewModels.ViewModelFactory
@@ -22,6 +20,9 @@ import kotlinx.android.synthetic.main.list_layout.*
 import javax.inject.Inject
 
 class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterInterface {
+
+    @Inject
+    lateinit var factory: ViewModelFactory.Bicycles
 
     private lateinit var viewModel: BicyclesViewModel
 
@@ -37,12 +38,13 @@ class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterIn
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        injectDependencies()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.list_layout, container, false)
-        setHasOptionsMenu(true)
-
-        val factory = InjectorUtils.provideBicyclesViewModelFactory()
         viewModel = ViewModelProviders.of(this, factory).get(BicyclesViewModel::class.java)
         return view
     }
@@ -85,6 +87,15 @@ class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterIn
                 infoToast("ERROR")
             }
         })
+    }
+
+
+    private fun injectDependencies(){
+        DaggerAppComponent.builder()
+            .roomModule(RoomModule())
+            .appModule(AppModule(requireContext()))
+            .build()
+            .inject(this)
     }
 
 
