@@ -1,9 +1,9 @@
 package com.apps.mkacik.rentbicycle.data
 
 import androidx.lifecycle.LiveData
-import com.apps.mkacik.rentbicycle.data.database.DatabaseDAO
+import com.apps.mkacik.rentbicycle.data.database.dao.DatabaseDAO
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
-import com.apps.mkacik.rentbicycle.data.database.entity.Rent
+import com.apps.mkacik.rentbicycle.data.database.model.Rent
 import com.apps.mkacik.rentbicycle.data.database.entity.RentEntity
 import com.apps.mkacik.rentbicycle.utilities.SimpleFunction
 import javax.inject.Inject
