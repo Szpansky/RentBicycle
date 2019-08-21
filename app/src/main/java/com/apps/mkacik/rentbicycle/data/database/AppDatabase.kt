@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.apps.mkacik.rentbicycle.data.database.dao.DatabaseDAO
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 import com.apps.mkacik.rentbicycle.data.database.entity.RentEntity
 import com.apps.mkacik.rentbicycle.data.database.entity.TransactionLogEntity

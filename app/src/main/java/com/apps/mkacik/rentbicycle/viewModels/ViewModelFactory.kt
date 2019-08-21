@@ -2,7 +2,7 @@ package com.apps.mkacik.rentbicycle.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.apps.mkacik.rentbicycle.data.BicyclesRepository
+import com.apps.mkacik.rentbicycle.data.database.repository.BicyclesRepository
 import javax.inject.Inject
 
 class ViewModelFactory @Inject constructor() {

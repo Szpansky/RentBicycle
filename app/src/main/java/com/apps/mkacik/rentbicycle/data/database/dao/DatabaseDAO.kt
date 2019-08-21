@@ -1,9 +1,10 @@
-package com.apps.mkacik.rentbicycle.data.database
+package com.apps.mkacik.rentbicycle.data.database.dao
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
-import com.apps.mkacik.rentbicycle.data.database.entity.*
-import com.apps.mkacik.rentbicycle.data.database.model.Rent
+import androidx.room.Dao
+import androidx.room.Query
+import com.apps.mkacik.rentbicycle.data.database.dao.BicycleDao
+import com.apps.mkacik.rentbicycle.data.database.dao.RentDao
+import com.apps.mkacik.rentbicycle.data.database.dao.TransactionLogDao
 
 
 @Dao

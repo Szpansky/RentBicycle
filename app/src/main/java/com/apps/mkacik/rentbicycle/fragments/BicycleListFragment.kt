@@ -9,8 +9,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.apps.mkacik.rentbicycle.R
 import com.apps.mkacik.rentbicycle.adapters.BicyclesAdapter
-import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
+import com.apps.mkacik.rentbicycle.data.database.providers.BicycleProvider
+import com.apps.mkacik.rentbicycle.data.database.providers.RentProvider
 import com.apps.mkacik.rentbicycle.utilities.AppModule
 import com.apps.mkacik.rentbicycle.utilities.DaggerAppComponent
 import com.apps.mkacik.rentbicycle.utilities.RoomModule
@@ -73,7 +74,7 @@ class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterIn
 
 
     override fun loadData() {
-        viewModel.getBicycles(object : BicycleLoadingProvider.GetCallBack {
+        viewModel.getBicycles(object : BicycleProvider.GetCallBack {
 
             override fun onSuccess(bicycleList: LiveData<List<BicycleEntity>>) {
                 bicycleList.observe(lifecycleOwner, Observer { bicycles ->
@@ -90,7 +91,7 @@ class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterIn
     }
 
 
-    private fun injectDependencies(){
+    private fun injectDependencies() {
         DaggerAppComponent.builder()
             .roomModule(RoomModule())
             .appModule(AppModule(requireContext()))
@@ -110,7 +111,7 @@ class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterIn
     override fun onRentClick(bicycleEntity: BicycleEntity) {
         infoToast("RENT CLICK")
 
-        viewModel.rentBicycle(bicycleEntity, object : BicycleLoadingProvider.RentCallBack {
+        viewModel.rentBicycle(bicycleEntity, object : RentProvider.RentCallBack {
             override fun onSuccess() {
                 infoToast("ADDED")
             }

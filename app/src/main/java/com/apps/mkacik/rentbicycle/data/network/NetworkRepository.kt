@@ -1,4 +1,4 @@
-package com.apps.mkacik.rentbicycle.data.database.repository
+package com.apps.mkacik.rentbicycle.data.network
 
 class NetworkRepository {
 }

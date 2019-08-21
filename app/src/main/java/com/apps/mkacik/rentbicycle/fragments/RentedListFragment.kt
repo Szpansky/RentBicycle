@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.apps.mkacik.rentbicycle.R
 import com.apps.mkacik.rentbicycle.activities.RentedBicycleActivity
 import com.apps.mkacik.rentbicycle.adapters.RentedAdapter
-import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
-import com.apps.mkacik.rentbicycle.data.database.entity.Rent
+import com.apps.mkacik.rentbicycle.data.database.model.Rent
+import com.apps.mkacik.rentbicycle.data.database.providers.RentProvider
 import com.apps.mkacik.rentbicycle.utilities.AppModule
 import com.apps.mkacik.rentbicycle.utilities.DaggerAppComponent
 import com.apps.mkacik.rentbicycle.utilities.RoomModule
@@ -45,7 +45,7 @@ class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterf
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injectDependencies()
+            injectDependencies()
     }
 
 
@@ -69,7 +69,7 @@ class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterf
 
 
     override fun loadData() {
-        viewModel.getRentedBicycles(object : BicycleLoadingProvider.GetRentBicyclesCallBack {
+        viewModel.getRentedBicycles(object : RentProvider.GetRentBicyclesCallBack {
             override fun onSuccess(bicycleList: LiveData<List<Rent>>) {
                 bicycleList.observe(lifecycleOwner, Observer { bicycles ->
 
@@ -86,7 +86,7 @@ class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterf
     }
 
 
-    private fun injectDependencies(){
+    private fun injectDependencies() {
         DaggerAppComponent.builder()
             .roomModule(RoomModule())
             .appModule(AppModule(requireContext()))

@@ -1,9 +1,9 @@
 package com.apps.mkacik.rentbicycle.utilities
 
 import android.content.Context
-import com.apps.mkacik.rentbicycle.data.BicyclesRepository
+import com.apps.mkacik.rentbicycle.data.database.repository.BicyclesRepository
 import com.apps.mkacik.rentbicycle.data.database.AppDatabase
-import com.apps.mkacik.rentbicycle.data.database.DatabaseDAO
+import com.apps.mkacik.rentbicycle.data.database.dao.DatabaseDAO
 import com.apps.mkacik.rentbicycle.viewModels.ViewModelFactory
 import dagger.Module
 import dagger.Provides
