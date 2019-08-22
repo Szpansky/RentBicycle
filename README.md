@@ -44,11 +44,8 @@ My Bicycle Rent info Port Landscape
 * [ROOM] - database
 * [LiveData] - data mangament
 * [Dagger 2] - dependency injection
+* [LeakCanary] - A memory leak detection library for Android
 
 ## Authors
 
 * **Marcin Kacik** - *got2know*
-
-## Acknowledgments
-
-* HomeWork
