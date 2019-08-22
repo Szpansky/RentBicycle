@@ -15,9 +15,7 @@ import com.apps.mkacik.rentbicycle.dialogs.FirstRunDialog
 import com.apps.mkacik.rentbicycle.fragments.BicycleListFragment
 import com.apps.mkacik.rentbicycle.fragments.RentedListFragment
 import com.apps.mkacik.rentbicycle.fragments.WalletFragment
-import com.apps.mkacik.rentbicycle.utilities.AppModule
-import com.apps.mkacik.rentbicycle.utilities.DaggerAppComponent
-import com.apps.mkacik.rentbicycle.utilities.RoomModule
+import com.apps.mkacik.rentbicycle.utilities.App
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -118,11 +116,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     private fun injectDependencies() {
-        DaggerAppComponent.builder()
-            .roomModule(RoomModule())
-            .appModule(AppModule(this))
-            .build()
-            .inject(this)
+        (this.application as App).getMyAppComponent().inject(this)
     }
 
 

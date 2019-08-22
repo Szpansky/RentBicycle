@@ -11,9 +11,7 @@ import com.apps.mkacik.rentbicycle.adapters.BicyclesAdapter
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 import com.apps.mkacik.rentbicycle.data.database.providers.BicycleProvider
 import com.apps.mkacik.rentbicycle.data.database.providers.RentProvider
-import com.apps.mkacik.rentbicycle.utilities.AppModule
-import com.apps.mkacik.rentbicycle.utilities.DaggerAppComponent
-import com.apps.mkacik.rentbicycle.utilities.RoomModule
+import com.apps.mkacik.rentbicycle.utilities.App
 import com.apps.mkacik.rentbicycle.viewModels.BicyclesViewModel
 import com.apps.mkacik.rentbicycle.viewModels.ViewModelFactory
 import kotlinx.android.synthetic.main.list_layout.*
@@ -22,7 +20,7 @@ import javax.inject.Inject
 class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterInterface {
 
     @Inject
-    lateinit var factory: ViewModelFactory.Bicycles
+    lateinit var factory: ViewModelFactory.Factory
 
     private lateinit var viewModel: BicyclesViewModel
 
@@ -86,11 +84,7 @@ class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterIn
 
 
     private fun injectDependencies() {
-        DaggerAppComponent.builder()
-            .roomModule(RoomModule())
-            .appModule(AppModule(requireContext()))
-            .build()
-            .inject(this)
+        (activity?.application as App).getMyAppComponent().inject(this)
     }
 
 

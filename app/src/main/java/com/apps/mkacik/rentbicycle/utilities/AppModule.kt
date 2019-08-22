@@ -1,24 +1,18 @@
 package com.apps.mkacik.rentbicycle.utilities
 
-import android.content.Context
+import android.app.Application
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 
 @Module
-class AppModule {
+class AppModule(application: Application) {
 
-    private var mContext: Context
-
-    constructor(context: Context) {
-        mContext = context
-    }
+    private val mApplication: Application = application
 
     @Provides
-    @Singleton
-    fun providesApplication(): Context {
-        return mContext
+    fun providesApplication(): Application {
+        return mApplication
     }
 
 }

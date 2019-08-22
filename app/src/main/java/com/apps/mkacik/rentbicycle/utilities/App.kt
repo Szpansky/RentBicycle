@@ -1,25 +1,21 @@
 package com.apps.mkacik.rentbicycle.utilities
 
 import android.app.Application
-import android.content.Context
 
 
 class App : Application() {
 
-  /*  val appComponent: AppComponent by lazy {
-        generateAppComponent()
+    private lateinit var appComponent: AppComponent
+
+    override fun onCreate() {
+        super.onCreate()
+        appComponent = DaggerAppComponent.builder()
+            .appModule(AppModule(this@App))
+            .roomModule(RoomModule(this@App))
+            .build()
     }
 
-    companion object {
-        fun getApplication(context: Context): App {
-            return context.applicationContext as App
-        }
+    fun getMyAppComponent(): AppComponent {
+        return appComponent
     }
-
-    private fun generateAppComponent(): AppComponent {
-        return DaggerAppComponent.builder().run {
-            appModule(AppModule(this@App))
-            build()
-        }
-    }*/
 }

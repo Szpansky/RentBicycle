@@ -12,9 +12,7 @@ import com.apps.mkacik.rentbicycle.activities.RentedBicycleActivity
 import com.apps.mkacik.rentbicycle.adapters.RentedAdapter
 import com.apps.mkacik.rentbicycle.data.database.model.Rent
 import com.apps.mkacik.rentbicycle.data.database.providers.RentProvider
-import com.apps.mkacik.rentbicycle.utilities.AppModule
-import com.apps.mkacik.rentbicycle.utilities.DaggerAppComponent
-import com.apps.mkacik.rentbicycle.utilities.RoomModule
+import com.apps.mkacik.rentbicycle.utilities.App
 import com.apps.mkacik.rentbicycle.viewModels.RentedViewModel
 import com.apps.mkacik.rentbicycle.viewModels.ViewModelFactory
 import kotlinx.android.synthetic.main.list_layout.*
@@ -23,7 +21,7 @@ import javax.inject.Inject
 class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterface {
 
     @Inject
-    lateinit var factory: ViewModelFactory.RentedBicycles
+    lateinit var factory: ViewModelFactory.Factory
 
     private lateinit var viewModel: RentedViewModel
 
@@ -79,11 +77,7 @@ class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterf
 
 
     private fun injectDependencies() {
-        DaggerAppComponent.builder()
-            .roomModule(RoomModule())
-            .appModule(AppModule(requireContext()))
-            .build()
-            .inject(this)
+        (activity?.application as App).getMyAppComponent().inject(this)
     }
 
 

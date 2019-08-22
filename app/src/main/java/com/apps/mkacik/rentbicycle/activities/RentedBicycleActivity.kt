@@ -12,9 +12,7 @@ import com.apps.mkacik.rentbicycle.data.AppSharedPref
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
 import com.apps.mkacik.rentbicycle.data.database.model.Rent
 import com.apps.mkacik.rentbicycle.data.database.providers.RentProvider
-import com.apps.mkacik.rentbicycle.utilities.AppModule
-import com.apps.mkacik.rentbicycle.utilities.DaggerAppComponent
-import com.apps.mkacik.rentbicycle.utilities.RoomModule
+import com.apps.mkacik.rentbicycle.utilities.App
 import com.apps.mkacik.rentbicycle.utilities.SimpleFunction
 import com.apps.mkacik.rentbicycle.viewModels.RentedInfoViewModel
 import com.apps.mkacik.rentbicycle.viewModels.ViewModelFactory
@@ -28,7 +26,7 @@ import kotlin.properties.Delegates
 class RentedBicycleActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var factory: ViewModelFactory.RentedInfo
+    lateinit var factory: ViewModelFactory.Factory
 
     private lateinit var viewModel: RentedInfoViewModel
     lateinit var rent: Rent
@@ -83,11 +81,7 @@ class RentedBicycleActivity : AppCompatActivity() {
 
 
     private fun injectDependencies() {
-        DaggerAppComponent.builder()
-            .roomModule(RoomModule())
-            .appModule(AppModule(this))
-            .build()
-            .inject(this)
+        (this.application as App).getMyAppComponent().inject(this)
     }
 
 
