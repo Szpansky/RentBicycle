@@ -2,7 +2,6 @@ package com.apps.mkacik.rentbicycle.fragments
 
 import android.os.Bundle
 import android.view.*
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -28,10 +27,6 @@ class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterf
 
     private lateinit var viewModel: RentedViewModel
 
-    val lifecycleOwner: LifecycleOwner = this
-    val rentedAdapterInterface: RentedAdapter.RentedAdapterInterface = this
-
-
     companion object {
         val TAG = this::class.java.name
         const val NAME = "Rented Bicycles"
@@ -45,7 +40,7 @@ class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterf
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-            injectDependencies()
+        injectDependencies()
     }
 
 
@@ -71,11 +66,8 @@ class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterf
     override fun loadData() {
         viewModel.getRentedBicycles(object : RentProvider.GetRentBicyclesCallBack {
             override fun onSuccess(bicycleList: LiveData<List<Rent>>) {
-                bicycleList.observe(lifecycleOwner, Observer { bicycles ->
-
-                    recycle_view.adapter = RentedAdapter(bicycles)
-                    (recycle_view.adapter as RentedAdapter).bindInterface(rentedAdapterInterface)
-
+                bicycleList.observe(this@RentedListFragment, Observer { bicycles ->
+                    recycle_view.adapter = RentedAdapter(bicycles, this@RentedListFragment)
                 })
             }
 

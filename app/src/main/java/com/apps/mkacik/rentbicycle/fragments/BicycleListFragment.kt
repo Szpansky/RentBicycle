@@ -2,7 +2,6 @@ package com.apps.mkacik.rentbicycle.fragments
 
 import android.os.Bundle
 import android.view.*
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -26,9 +25,6 @@ class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterIn
     lateinit var factory: ViewModelFactory.Bicycles
 
     private lateinit var viewModel: BicyclesViewModel
-
-    val lifecycleOwner: LifecycleOwner = this
-    val bicycleAdapterInterface: BicyclesAdapter.BicycleAdapterInterface = this
 
     companion object {
         val TAG = this::class.java.name
@@ -77,10 +73,8 @@ class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterIn
         viewModel.getBicycles(object : BicycleProvider.GetCallBack {
 
             override fun onSuccess(bicycleList: LiveData<List<BicycleEntity>>) {
-                bicycleList.observe(lifecycleOwner, Observer { bicycles ->
-
-                    recycle_view.adapter = BicyclesAdapter(bicycles)
-                    (recycle_view.adapter as BicyclesAdapter).bindInterface(bicycleAdapterInterface)
+                bicycleList.observe(this@BicycleListFragment, Observer { bicycles ->
+                    recycle_view.adapter = BicyclesAdapter(bicycles, this@BicycleListFragment)
                 })
             }
 
@@ -120,5 +114,10 @@ class BicycleListFragment : BaseListFragment(), BicyclesAdapter.BicycleAdapterIn
                 infoToast("ERROR ${throwable.message}")
             }
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
     }
 }
