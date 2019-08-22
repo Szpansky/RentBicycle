@@ -8,16 +8,14 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.apps.mkacik.rentbicycle.R
 import com.apps.mkacik.rentbicycle.data.AppSharedPref
-import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
-import com.apps.mkacik.rentbicycle.data.BicyclesRepository
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
+import com.apps.mkacik.rentbicycle.data.database.providers.BicycleProvider
+import com.apps.mkacik.rentbicycle.data.database.repository.BicyclesRepository
 import com.apps.mkacik.rentbicycle.dialogs.FirstRunDialog
 import com.apps.mkacik.rentbicycle.fragments.BicycleListFragment
 import com.apps.mkacik.rentbicycle.fragments.RentedListFragment
 import com.apps.mkacik.rentbicycle.fragments.WalletFragment
-import com.apps.mkacik.rentbicycle.utilities.AppModule
-import com.apps.mkacik.rentbicycle.utilities.DaggerAppComponent
-import com.apps.mkacik.rentbicycle.utilities.RoomModule
+import com.apps.mkacik.rentbicycle.utilities.App
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -45,9 +43,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             BicycleEntity(false, 1.4F, "Red", "Dirty"),
             BicycleEntity(true, 1.9F, "Pink", "Rover")
         )
-        bicyclesRepository.addBicycles(bicycles, object : BicycleLoadingProvider.AddListCallBack {
+        bicyclesRepository.addBicycles(bicycles, object : BicycleProvider.AddListCallBack {
             override fun onSuccess() {
             }
+
             override fun onFail(throwable: Throwable) {
             }
         })
@@ -89,12 +88,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injectDependencies()
-        checkFirstRun()
-        setContentView(R.layout.activity_main)
-        initThisActivity()
         if (savedInstanceState == null) {
             createBicycleFragment()
         }
+        checkFirstRun()
+        setContentView(R.layout.activity_main)
+        initThisActivity()
     }
 
 
@@ -116,16 +115,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-    private fun injectDependencies(){
-        DaggerAppComponent.builder()
-            .roomModule(RoomModule())
-            .appModule(AppModule(this))
-            .build()
-            .inject(this)
+    private fun injectDependencies() {
+        (this.application as App).getMyAppComponent().inject(this)
     }
 
 
-    private fun checkFirstRun(){
+    private fun checkFirstRun() {
         if (AppSharedPref().isFirstRun(this) && supportFragmentManager.findFragmentByTag(FirstRunDialog.TAG) == null) {
             FirstRunDialog.newInstance().show(supportFragmentManager, FirstRunDialog.TAG)
         }

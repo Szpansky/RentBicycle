@@ -9,12 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.apps.mkacik.rentbicycle.R
 import com.apps.mkacik.rentbicycle.data.AppSharedPref
-import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
 import com.apps.mkacik.rentbicycle.data.database.entity.BicycleEntity
-import com.apps.mkacik.rentbicycle.data.database.entity.Rent
-import com.apps.mkacik.rentbicycle.utilities.AppModule
-import com.apps.mkacik.rentbicycle.utilities.DaggerAppComponent
-import com.apps.mkacik.rentbicycle.utilities.RoomModule
+import com.apps.mkacik.rentbicycle.data.database.model.Rent
+import com.apps.mkacik.rentbicycle.data.database.providers.RentProvider
+import com.apps.mkacik.rentbicycle.utilities.App
 import com.apps.mkacik.rentbicycle.utilities.SimpleFunction
 import com.apps.mkacik.rentbicycle.viewModels.RentedInfoViewModel
 import com.apps.mkacik.rentbicycle.viewModels.ViewModelFactory
@@ -28,7 +26,7 @@ import kotlin.properties.Delegates
 class RentedBicycleActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var factory: ViewModelFactory.RentedInfo
+    lateinit var factory: ViewModelFactory.Factory
 
     private lateinit var viewModel: RentedInfoViewModel
     lateinit var rent: Rent
@@ -68,6 +66,7 @@ class RentedBicycleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_rent_info)
         injectDependencies()
+
         viewModel = ViewModelProviders.of(this, factory).get(RentedInfoViewModel::class.java)
 
         if (savedInstanceState == null) {
@@ -81,18 +80,14 @@ class RentedBicycleActivity : AppCompatActivity() {
     }
 
 
-    private fun injectDependencies(){
-        DaggerAppComponent.builder()
-            .roomModule(RoomModule())
-            .appModule(AppModule(this))
-            .build()
-            .inject(this)
+    private fun injectDependencies() {
+        (this.application as App).getMyAppComponent().inject(this)
     }
 
 
-    private fun onButtonClick(){
+    private fun onButtonClick() {
         end_rent_button.setOnClickListener {
-            viewModel.endRent(rent, object : BicycleLoadingProvider.EndRentCallBack {
+            viewModel.endRent(rent, object : RentProvider.EndRentCallBack {
                 override fun onSuccess() {
                     AppSharedPref().saveWalletCash(
                         AppSharedPref().getWalletCash(applicationContext) - price,
@@ -100,6 +95,7 @@ class RentedBicycleActivity : AppCompatActivity() {
                     )
                     onBackPressed()
                 }
+
                 override fun onFail(throwable: Throwable) {
                     Toast.makeText(applicationContext, throwable.message, Toast.LENGTH_SHORT).show()
                 }

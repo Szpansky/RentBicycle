@@ -2,7 +2,6 @@ package com.apps.mkacik.rentbicycle.fragments
 
 import android.os.Bundle
 import android.view.*
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -11,11 +10,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.apps.mkacik.rentbicycle.R
 import com.apps.mkacik.rentbicycle.activities.RentedBicycleActivity
 import com.apps.mkacik.rentbicycle.adapters.RentedAdapter
-import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
-import com.apps.mkacik.rentbicycle.data.database.entity.Rent
-import com.apps.mkacik.rentbicycle.utilities.AppModule
-import com.apps.mkacik.rentbicycle.utilities.DaggerAppComponent
-import com.apps.mkacik.rentbicycle.utilities.RoomModule
+import com.apps.mkacik.rentbicycle.data.database.model.Rent
+import com.apps.mkacik.rentbicycle.data.database.providers.RentProvider
+import com.apps.mkacik.rentbicycle.utilities.App
 import com.apps.mkacik.rentbicycle.viewModels.RentedViewModel
 import com.apps.mkacik.rentbicycle.viewModels.ViewModelFactory
 import kotlinx.android.synthetic.main.list_layout.*
@@ -24,13 +21,9 @@ import javax.inject.Inject
 class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterface {
 
     @Inject
-    lateinit var factory: ViewModelFactory.RentedBicycles
+    lateinit var factory: ViewModelFactory.Factory
 
     private lateinit var viewModel: RentedViewModel
-
-    val lifecycleOwner: LifecycleOwner = this
-    val rentedAdapterInterface: RentedAdapter.RentedAdapterInterface = this
-
 
     companion object {
         val TAG = this::class.java.name
@@ -69,13 +62,10 @@ class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterf
 
 
     override fun loadData() {
-        viewModel.getRentedBicycles(object : BicycleLoadingProvider.GetRentBicyclesCallBack {
+        viewModel.getRentedBicycles(object : RentProvider.GetRentBicyclesCallBack {
             override fun onSuccess(bicycleList: LiveData<List<Rent>>) {
-                bicycleList.observe(lifecycleOwner, Observer { bicycles ->
-
-                    recycle_view.adapter = RentedAdapter(bicycles)
-                    (recycle_view.adapter as RentedAdapter).bindInterface(rentedAdapterInterface)
-
+                bicycleList.observe(this@RentedListFragment, Observer { bicycles ->
+                    recycle_view.adapter = RentedAdapter(bicycles, this@RentedListFragment)
                 })
             }
 
@@ -86,12 +76,8 @@ class RentedListFragment : BaseListFragment(), RentedAdapter.RentedAdapterInterf
     }
 
 
-    private fun injectDependencies(){
-        DaggerAppComponent.builder()
-            .roomModule(RoomModule())
-            .appModule(AppModule(requireContext()))
-            .build()
-            .inject(this)
+    private fun injectDependencies() {
+        (activity?.application as App).getMyAppComponent().inject(this)
     }
 
 

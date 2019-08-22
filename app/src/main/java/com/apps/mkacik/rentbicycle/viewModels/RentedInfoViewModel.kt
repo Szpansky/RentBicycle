@@ -1,13 +1,13 @@
 package com.apps.mkacik.rentbicycle.viewModels
 
 import androidx.lifecycle.ViewModel
-import com.apps.mkacik.rentbicycle.data.BicycleLoadingProvider
-import com.apps.mkacik.rentbicycle.data.BicyclesRepository
-import com.apps.mkacik.rentbicycle.data.database.entity.Rent
+import com.apps.mkacik.rentbicycle.data.LoadingProvider
+import com.apps.mkacik.rentbicycle.data.database.model.Rent
+import com.apps.mkacik.rentbicycle.data.database.providers.RentProvider
 
-class RentedInfoViewModel(private val repository: BicycleLoadingProvider) : ViewModel() {
+class RentedInfoViewModel(private val repository: LoadingProvider) : ViewModel() {
 
-    fun endRent(rent: Rent, callBack: BicycleLoadingProvider.EndRentCallBack) {
+    fun endRent(rent: Rent, callBack: RentProvider.EndRentCallBack) {
         repository.endRent(rent, callBack)
     }
 }

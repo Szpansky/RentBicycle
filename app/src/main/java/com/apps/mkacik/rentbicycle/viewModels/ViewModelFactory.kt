@@ -2,34 +2,24 @@ package com.apps.mkacik.rentbicycle.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.apps.mkacik.rentbicycle.data.BicyclesRepository
+import com.apps.mkacik.rentbicycle.data.database.repository.BicyclesRepository
 import javax.inject.Inject
+
 
 class ViewModelFactory @Inject constructor() {
 
-    class RentedInfo @Inject constructor(val bicyclesRepository: BicyclesRepository) :
+    class Factory @Inject constructor(private val bicyclesRepository: BicyclesRepository) :
         ViewModelProvider.NewInstanceFactory() {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return RentedInfoViewModel(bicyclesRepository) as T
-        }
-    }
 
-
-    class RentedBicycles @Inject constructor(val bicyclesRepository: BicyclesRepository) :
-        ViewModelProvider.NewInstanceFactory() {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return RentedViewModel(bicyclesRepository) as T
-        }
-    }
-
-
-    class Bicycles @Inject constructor(val bicyclesRepository: BicyclesRepository) :
-        ViewModelProvider.NewInstanceFactory() {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return BicyclesViewModel(bicyclesRepository) as T
+            if (modelClass.isAssignableFrom(BicyclesViewModel::class.java))
+                return BicyclesViewModel(bicyclesRepository) as T
+            else if (modelClass.isAssignableFrom(RentedViewModel::class.java))
+                return RentedViewModel(bicyclesRepository) as T
+            else if (modelClass.isAssignableFrom(RentedInfoViewModel::class.java))
+                return RentedInfoViewModel(bicyclesRepository) as T
+            else throw IllegalArgumentException("Cant provide that VM for you")
         }
     }
 }
