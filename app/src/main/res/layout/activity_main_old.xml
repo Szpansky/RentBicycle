@@ -7,7 +7,7 @@
     android:background="@drawable/background_main"
     tools:context=".activities.MainActivity">
 
-    <com.apps.mkacik.rentbicycle.layouts.MenuButton
+    <com.apps.mkacik.rentbicycle.layouts.RoundImageTextLayout
         android:id="@+id/rentedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toBottomOf="@+id/walletView"
         app:srcCompat="@drawable/circle" />
 
-    <com.apps.mkacik.rentbicycle.layouts.MenuButton
+    <com.apps.mkacik.rentbicycle.layouts.RoundImageTextLayout
         android:id="@+id/listButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/walletView"
         app:srcCompat="@drawable/circle" />
 
-    <com.apps.mkacik.rentbicycle.layouts.MenuButton
+    <com.apps.mkacik.rentbicycle.layouts.RoundImageTextLayout
         android:id="@+id/walletButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

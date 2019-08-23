@@ -28,4 +28,5 @@
     <string name="charge_with">Charge With</string>
     <string name="available">Available</string>
     <string name="occupied">Occupied</string>
+    <string name="add">Add</string>
 </resources>

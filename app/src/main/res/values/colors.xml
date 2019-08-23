@@ -8,4 +8,5 @@
     <color name="colorButtonStart">#059733</color>
     <color name="colorButtonEnd">#05587e</color>
     <color name="transparent">#00000000</color>
+    <color name="colorPrimaryTransparent_99">#992e7d32</color>
 </resources>

@@ -8,15 +8,15 @@ import android.widget.LinearLayout
 import com.apps.mkacik.rentbicycle.R
 import kotlinx.android.synthetic.main.circle_text_image_layout.view.*
 
-class MenuButton(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
+class RoundImageTextLayout(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
     private val inflater : LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    private val typedArray : TypedArray = context.obtainStyledAttributes(attrs,R.styleable.MenuButton,0,0)
+    private val typedArray : TypedArray = context.obtainStyledAttributes(attrs,R.styleable.RoundImageTextLayout,0,0)
 
     init {
         inflater.inflate(R.layout.circle_text_image_layout,this)
-        image.setImageDrawable(typedArray.getDrawable(R.styleable.MenuButton_image))
-        description.text = typedArray.getText(R.styleable.MenuButton_description)
+        image.setImageDrawable(typedArray.getDrawable(R.styleable.RoundImageTextLayout_image))
+        description.text = typedArray.getText(R.styleable.RoundImageTextLayout_description)
     }
 }
 
