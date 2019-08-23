@@ -1,6 +1,9 @@
 package com.apps.mkacik.rentbicycle.utilities
 
 import android.app.Application
+import com.apps.mkacik.rentbicycle.dependencies.AppComponent
+import com.apps.mkacik.rentbicycle.dependencies.AppModule
+import com.apps.mkacik.rentbicycle.dependencies.DaggerAppComponent
 
 
 class App : Application() {
@@ -11,7 +14,6 @@ class App : Application() {
         super.onCreate()
         appComponent = DaggerAppComponent.builder()
             .appModule(AppModule(this@App))
-            .roomModule(RoomModule(this@App))
             .build()
     }
 

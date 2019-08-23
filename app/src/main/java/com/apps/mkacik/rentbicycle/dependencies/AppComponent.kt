@@ -1,4 +1,4 @@
-package com.apps.mkacik.rentbicycle.utilities
+package com.apps.mkacik.rentbicycle.dependencies
 
 import android.app.Application
 import com.apps.mkacik.rentbicycle.activities.MainActivity

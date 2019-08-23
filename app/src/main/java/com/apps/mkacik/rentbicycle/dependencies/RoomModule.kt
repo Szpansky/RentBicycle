@@ -1,4 +1,4 @@
-package com.apps.mkacik.rentbicycle.utilities
+package com.apps.mkacik.rentbicycle.dependencies
 
 import android.app.Application
 import androidx.room.Room
@@ -12,20 +12,18 @@ import javax.inject.Singleton
 
 
 @Module
-class RoomModule(application: Application) {
-
-    private val mDatabase: AppDatabase = Room.databaseBuilder(
-        application,
-        AppDatabase::class.java,
-        AppDatabase.NAME
-    ).allowMainThreadQueries()
-        .build()
+class RoomModule {
 
 
     @Provides
     @Singleton
-    fun provideDatabase(): AppDatabase {
-        return mDatabase
+    fun provideDatabase(application: Application): AppDatabase {
+        return Room.databaseBuilder(
+            application,
+            AppDatabase::class.java,
+            AppDatabase.NAME
+        ).allowMainThreadQueries()
+            .build()
     }
 
 
@@ -48,5 +46,4 @@ class RoomModule(application: Application) {
     fun providesVMFactory(bicyclesRepository: BicyclesRepository): ViewModelFactory.Factory {
         return ViewModelFactory.Factory(bicyclesRepository)
     }
-
 }
