@@ -11,29 +11,26 @@ A step by step series of examples that tell you how project look
 ```
 Main Screen
 ```
-![alt Main Activity](https://github.com/Szpansky/RentBicycle/blob/master/app/src/main/res/drawable-xxxhdpi/main_activity.PNG)
-
-```
-Wallet
-```
-![alt Wallet](https://github.com/Szpansky/RentBicycle/blob/master/app/src/main/res/drawable-xxxhdpi/wallet_activity.PNG)
-
-```
-All Bicycles List
-```
-![alt All Bicycle List](https://github.com/Szpansky/RentBicycle/blob/master/app/src/main/res/drawable-xxxhdpi/all_bicycles_list.PNG)
+![alt Main Activity](https://github.com/Szpansky/RentBicycle/blob/master/main_1.png)
+![alt Main Activity](https://github.com/Szpansky/RentBicycle/blob/master/main_1_1.png)
+![alt Main Activity](https://github.com/Szpansky/RentBicycle/blob/master/main_1_2.png)
 
 ```
 My Bicycle List
 ```
-![alt My Bicycle List](https://github.com/Szpansky/RentBicycle/blob/master/app/src/main/res/drawable-xxxhdpi/my_bycicles_list.PNG)
+![alt Main Activity](https://github.com/Szpansky/RentBicycle/blob/master/main_2.png)
 
 ```
 My Bicycle Rent info Port Landscape
 ```
 ![alt My Bicycle Info](https://github.com/Szpansky/RentBicycle/blob/master/app/src/main/res/drawable-xxxhdpi/my_bicycle_rent_info.PNG)
-
 ![alt My Bicycle Info Land](https://github.com/Szpansky/RentBicycle/blob/master/app/src/main/res/drawable-xxxhdpi/my_bicycle_rent_info_land.PNG)
+
+```
+Wallet
+```
+![alt Main Activity](https://github.com/Szpansky/RentBicycle/blob/master/main_3.png)
+![alt Main Activity](https://github.com/Szpansky/RentBicycle/blob/master/main_3_1.png)
 
 
 ## Built With
