@@ -45,6 +45,7 @@ My Bicycle Rent info Port Landscape
 * [LiveData] - data mangament
 * [Dagger 2] - dependency injection
 * [LeakCanary] - A memory leak detection library for Android
+* [Customs Layouts] - Make app prettier
 
 ## Authors
 
