@@ -4,7 +4,7 @@ App for rent a bicycle
 
 ## Task Description
 
-Create application that provides sortable list of bicycles with color, brand, price and status. The app should allow rent avalible bicycle for cash. User cash will be provide with 1st run dialog, and user can add in future in wallet activty. User can display his rented bicycles and additional info about rent. For first run app programist add 10 random bicycles with all need fields. For testing purpose 10 s - 1 h. We are looking for clean code, easy to read and uses a software design pattern suitable for this task and fully working app..
+Create an application that provides a sortable list of bicycles with colour, brand, price and status. The app should allow available rent bicycle for cash. User cash will be provided with 1st run dialogue, and the user can add in future in wallet activity. User can display his rented bikes and additional info about rent. For the first-run app, programmatically add ten random bicycles with all need fields. For testing purpose 10 s - 1 h. We are looking for clean code, easy to read and uses a software design pattern suitable for this task and fully working app.
 
 
 ### Project look
